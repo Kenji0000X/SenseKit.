@@ -3,6 +3,8 @@ import { A11yProvider } from './context/A11yContext'
 import Header from './components/Header'
 import LetterPronunciation from './components/LetterPronunciation'
 import A11ySettings from './components/A11ySettings'
+import FeedbackWidget from './components/FeedbackWidget'
+import './components/FeedbackWidget.css'
 
 /**
  * Main App Component - SenseKit
@@ -561,6 +563,9 @@ export default function App() {
 
         {/* Settings Panel */}
         <A11ySettings isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
+        
+        {/* Feedback Widget */}
+        <FeedbackWidget />
       </div>
     </A11yProvider>
   )
