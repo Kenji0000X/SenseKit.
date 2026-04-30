@@ -1,0 +1,343 @@
+/* ── SETTINGS PANEL CONTAINER ─────────────── */
+[role="dialog"] {
+  background: #0f1624 !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  border-radius: 16px !important;
+  width: 300px !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(74,143,255,0.08) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+/* ── PANEL HEADER ─────────────────────────── */
+[role="dialog"] > div:first-child {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 18px 20px 14px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  position: sticky !important;
+  top: 0 !important;
+  background: #0f1624 !important;
+  z-index: 10 !important;
+}
+
+[role="dialog"] h2 {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: #f0f4ff !important;
+  letter-spacing: -0.01em !important;
+  margin: 0 !important;
+}
+
+/* Close (X) button */
+[role="dialog"] button[aria-label="Close settings"] {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  color: #7a8faa !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  font-size: 1rem !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
+}
+
+[role="dialog"] button[aria-label="Close settings"]:hover {
+  background: rgba(248,113,113,0.12) !important;
+  border-color: rgba(248,113,113,0.3) !important;
+  color: #f87171 !important;
+}
+
+[role="dialog"] button[aria-label="Close settings"]:focus-visible {
+  outline: 2px solid #4a8fff !important;
+  outline-offset: 2px !important;
+}
+
+/* ── DISPLAY / AUDIO / PRIVACY TABS ──────── */
+[role="dialog"] > div:nth-child(2) {
+  display: flex !important;
+  gap: 4px !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  background: rgba(0,0,0,0.2) !important;
+}
+
+[role="dialog"] [role="tab"] {
+  flex: 1 !important;
+  min-height: 36px !important;
+  padding: 8px 10px !important;
+  border-radius: 8px !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  color: #7a8faa !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  letter-spacing: 0.01em !important;
+  white-space: nowrap !important;
+}
+
+[role="dialog"] [role="tab"]:hover {
+  color: #c8d6ee !important;
+  background: rgba(255,255,255,0.04) !important;
+}
+
+/* Active tab */
+[role="dialog"] [role="tab"][aria-selected="true"] {
+  background: rgba(74,143,255,0.12) !important;
+  border-color: rgba(74,143,255,0.25) !important;
+  color: #4a8fff !important;
+}
+
+[role="dialog"] [role="tab"]:focus-visible {
+  outline: 2px solid #4a8fff !important;
+  outline-offset: 2px !important;
+}
+
+/* ── SCROLLABLE CONTENT AREA ──────────────── */
+[role="dialog"] > div:nth-child(3) {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  padding: 8px 0 !important;
+}
+
+/* ── SECTION GROUPS ───────────────────────── */
+[role="dialog"] > div:nth-child(3) > div {
+  padding: 16px 20px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+}
+
+[role="dialog"] > div:nth-child(3) > div:last-child {
+  border-bottom: none !important;
+}
+
+/* ── SECTION LABEL ────────────────────────── */
+[role="dialog"] h3 {
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  color: #4a5c75 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  margin-bottom: 12px !important;
+  margin-top: 0 !important;
+}
+
+/* ── THEME RADIO BUTTONS ──────────────────── */
+[role="dialog"] label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 9px 12px !important;
+  border-radius: 9px !important;
+  border: 1px solid transparent !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  background: transparent !important;
+  margin: 0 0 6px 0 !important;
+}
+
+[role="dialog"] label:hover {
+  background: rgba(255,255,255,0.03) !important;
+  border-color: rgba(255,255,255,0.06) !important;
+}
+
+[role="dialog"] label:has(input:checked) {
+  background: rgba(74,143,255,0.08) !important;
+  border-color: rgba(74,143,255,0.2) !important;
+}
+
+/* Custom radio buttons */
+[role="dialog"] input[type="radio"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  border: 2px solid #2d3f56 !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
+}
+
+[role="dialog"] input[type="radio"]:checked {
+  border-color: #4a8fff !important;
+  background: #4a8fff !important;
+  box-shadow: inset 0 0 0 3px #0f1624 !important;
+}
+
+[role="dialog"] input[type="radio"]:focus-visible {
+  outline: 2px solid #4a8fff !important;
+  outline-offset: 2px !important;
+}
+
+[role="dialog"] label span {
+  color: #c8d6ee !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  user-select: none !important;
+}
+
+/* ── FONT SIZE BUTTONS (XS S M L XL XXL) ─── */
+[role="dialog"] > div:nth-child(3) > div button {
+  min-height: 36px !important;
+  border-radius: 8px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  color: #7a8faa !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+}
+
+[role="dialog"] > div:nth-child(3) > div button:hover {
+  background: rgba(74,143,255,0.08) !important;
+  border-color: rgba(74,143,255,0.2) !important;
+  color: #a0b4cc !important;
+}
+
+/* Active font size */
+[role="dialog"] > div:nth-child(3) > div button[aria-pressed="true"] {
+  background: #4a8fff !important;
+  border-color: #4a8fff !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(74,143,255,0.35) !important;
+}
+
+[role="dialog"] > div:nth-child(3) > div button:focus-visible {
+  outline: 2px solid #4a8fff !important;
+  outline-offset: 2px !important;
+}
+
+/* ── CONTRAST DROPDOWN ────────────────────── */
+[role="dialog"] select {
+  width: 100% !important;
+  min-height: 42px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 9px !important;
+  color: #c8d6ee !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.9rem !important;
+  padding: 10px 36px 10px 12px !important;
+  cursor: pointer !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237a8faa' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  transition: all 0.2s ease !important;
+}
+
+[role="dialog"] select:hover {
+  border-color: rgba(74,143,255,0.3) !important;
+  background-color: rgba(74,143,255,0.05) !important;
+}
+
+[role="dialog"] select:focus {
+  outline: none !important;
+  border-color: #4a8fff !important;
+  box-shadow: 0 0 0 3px rgba(74,143,255,0.15) !important;
+}
+
+[role="dialog"] select option {
+  background: #0f1624 !important;
+  color: #c8d6ee !important;
+  padding: 8px !important;
+}
+
+/* ── FOOTER BUTTONS (Reset / Done) ───────── */
+[role="dialog"] > div:last-child {
+  display: flex !important;
+  gap: 10px !important;
+  padding: 16px 20px !important;
+  border-top: 1px solid rgba(255,255,255,0.06) !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  background: #0f1624 !important;
+  z-index: 10 !important;
+}
+
+[role="dialog"] > div:last-child button:first-child {
+  flex: 1 !important;
+  min-height: 44px !important;
+  border-radius: 9px !important;
+  background: rgba(248,113,113,0.06) !important;
+  border: 1px solid rgba(248,113,113,0.25) !important;
+  color: #f87171 !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+[role="dialog"] > div:last-child button:first-child:hover {
+  background: rgba(248,113,113,0.12) !important;
+  border-color: rgba(248,113,113,0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+[role="dialog"] > div:last-child button:first-child:focus-visible {
+  outline: 2px solid #f87171 !important;
+  outline-offset: 2px !important;
+}
+
+[role="dialog"] > div:last-child button:last-child {
+  flex: 1 !important;
+  min-height: 44px !important;
+  border-radius: 9px !important;
+  background: #4a8fff !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  font-family: 'DM Sans', sans-serif !important;
+  box-shadow: 0 4px 12px rgba(74,143,255,0.3) !important;
+}
+
+[role="dialog"] > div:last-child button:last-child:hover {
+  background: #3a7fff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 18px rgba(74,143,255,0.4) !important;
+}
+
+[role="dialog"] > div:last-child button:last-child:focus-visible {
+  outline: 2px solid #ffffff !important;
+  outline-offset: 2px !important;
+}
+
+/* ── REDUCED MOTION SUPPORT ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+  [role="dialog"],
+  [role="dialog"] *,
+  [role="dialog"] *::before,
+  [role="dialog"] *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

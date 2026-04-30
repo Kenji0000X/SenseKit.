@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SenseKit — Accessibility for Deaf & Blind Users</title>
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           DESIGN TOKENS & GLOBAL STYLES
+           ═══════════════════════════════════════════════════════════════ */
+        
+        :root {
+            --clr-bg:            #0d1117;
+            --clr-bg-panel:      #111827;
+            --clr-bg-card:       #141c2e;
+            --clr-bg-input:      #0d1117;
+            --clr-primary:       #4a90d9;    /* vision/blue */
+            --clr-secondary:     #7c3aed;    /* hearing/purple */
+            --clr-success:       #4ade80;
+            --clr-warning:       #f59e0b;
+            --clr-danger:        #fc8181;
+            --clr-text-1:        #ffffff;
+            --clr-text-2:        #e2e8f0;
+            --clr-text-3:        #a0b4cc;
+            --clr-text-muted:    #4a5568;
+            --clr-border:        #1e2d42;
+            --clr-border-hover:  #2d3a52;
+            --radius-sm:         8px;
+            --radius-md:         12px;
+            --radius-lg:         16px;
+            --min-touch:         44px;
+            --transition:        0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--clr-bg);
+            color: var(--clr-text-2);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SKIP LINK
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--clr-primary);
+            color: white;
+            padding: 8px;
+            z-index: 1000;
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           NAVBAR / HEADER
+           ═══════════════════════════════════════════════════════════════ */
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: var(--clr-bg);
+            border-bottom: 1px solid var(--clr-border);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            gap: 16px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--clr-primary) 50%, var(--clr-secondary) 50%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .brand-info h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .tagline {
+            font-size: 0.65rem;
+            color: var(--clr-text-3);
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-button {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            background: var(--clr-bg-card);
+            border: 1px solid var(--clr-border);
+            color: var(--clr-text-3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all var(--transition);
+        }
+
+        .nav-button:hover {
+            background: var(--clr-border-hover);
+            color: #ffffff;
+            border-color: var(--clr-border-hover);
+        }
+
+        .nav-button.active {
+            background: var(--clr-primary);
+            color: #ffffff;
+            border-color: var(--clr-primary);
+        }
+
+        .nav-button:focus-visible {
+            outline: 3px solid var(--clr-primary);
+            outline-offset: 2px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           MAIN CONTENT AREA
+           ═══════════════════════════════════════════════════════════════ */
+        
+        main {
+            margin-top: 64px;
+            margin-bottom: 60px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           HERO SECTION
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .hero {
+            background: radial-gradient(ellipse at 50% -20%, 
+                rgba(74,144,217,0.15) 0%, transparent 60%);
+            padding: 60px 32px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            color: var(--clr-text-3);
+            font-size: 1rem;
+            max-width: 580px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta {
+            min-height: 48px;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition);
+        }
+
+        .btn-cta.primary {
+            background: var(--clr-primary);
+            color: #ffffff;
+        }
+
+        .btn-cta.primary:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(74,144,217,0.3);
+        }
+
+        .btn-cta.secondary {
+            background: transparent;
+            border: 2px solid var(--clr-secondary);
+            color: #c4b5fd;
+        }
+
+        .btn-cta.secondary:hover {
+            background: rgba(124,58,237,0.1);
+            border-color: #c4b5fd;
+        }
+
+        .btn-cta:focus-visible {
+            outline: 3px solid var(--clr-primary);
+            outline-offset: 2px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FEATURES SECTION
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .features-section {
+            padding: 48px 32px;
+            background: var(--clr-bg);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.8rem, 3vw, 2rem);
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--clr-text-3);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--clr-bg-card);
+            border: 1px solid var(--clr-border);
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: border-color var(--transition), transform var(--transition);
+        }
+
+        .feature-card:hover {
+            border-color: var(--card-accent);
+            transform: translateY(-2px);
+        }
+
+        .feature-card:focus-within {
+            outline: 2px solid var(--clr-primary);
+            outline-offset: 2px;
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: rgba(var(--card-accent-rgb), 0.12);
+            border: 1px solid rgba(var(--card-accent-rgb), 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--card-accent);
+            flex-shrink: 0;
+        }
+
+        .card-pill {
+            font-size: 0.68rem;
+            font-weight: 600;
+            border-radius: 20px;
+            padding: 2px 10px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border: 1px solid;
+            white-space: nowrap;
+        }
+
+        .card-pill.deaf {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border-color: #f59e0b;
+        }
+
+        .card-pill.vision {
+            background: rgba(124, 58, 237, 0.1);
+            color: #c4b5fd;
+            border-color: #7c3aed;
+        }
+
+        .card-title {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .card-desc {
+            color: var(--clr-text-3);
+            font-size: 0.83rem;
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* Deaf/HoH card colors */
+        .card.deaf-1 { --card-accent: #4a90d9; --card-accent-rgb: 74, 144, 217; }
+        .card.deaf-2 { --card-accent: #f59e0b; --card-accent-rgb: 245, 158, 11; }
+        .card.deaf-3 { --card-accent: #10b981; --card-accent-rgb: 16, 185, 129; }
+
+        /* Vision card colors */
+        .card.vision-1 { --card-accent: #7c3aed; --card-accent-rgb: 124, 58, 237; }
+        .card.vision-2 { --card-accent: #ec4899; --card-accent-rgb: 236, 72, 153; }
+        .card.vision-3 { --card-accent: #4a90d9; --card-accent-rgb: 74, 144, 217; }
+
+        /* ═══════════════════════════════════════════════════════════════
+           VOICE INPUT SECTION
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .voice-section {
+            padding: 48px 32px;
+            background: var(--clr-bg);
+        }
+
+        .input-panel {
+            background: var(--clr-bg-panel);
+            border: 1px solid var(--clr-border);
+            border-radius: 16px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .input-label {
+            color: #c8d6e8;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        textarea {
+            width: 100%;
+            background: var(--clr-bg-input);
+            border: 2px solid var(--clr-border);
+            border-radius: 10px;
+            color: var(--clr-text-2);
+            font-size: 1rem;
+            padding: 14px 60px 14px 16px;
+            line-height: 1.6;
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        textarea::placeholder {
+            color: var(--clr-text-muted);
+        }
+
+        textarea:focus-visible {
+            outline: none;
+            border-color: var(--clr-primary);
+            box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.2);
+        }
+
+        .mic-fab {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--clr-primary);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .mic-fab:hover {
+            background: #357abd;
+            transform: scale(1.05);
+        }
+
+        .mic-fab:focus-visible {
+            outline: 3px solid white;
+            outline-offset: 2px;
+        }
+
+        .mic-fab[aria-pressed="true"] {
+            background: #e53e3e;
+            box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.3);
+            animation: pulse-ring 1.5s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(229, 62, 62, 0.1);
+            }
+            100% {
+                box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.3);
+            }
+        }
+
+        .hint-text {
+            color: var(--clr-text-muted);
+            font-size: 0.78rem;
+            display: block;
+        }
+
+        .output-box {
+            background: var(--clr-bg-input);
+            border: 1px solid var(--clr-border);
+            border-left: 3px solid var(--clr-secondary);
+            border-radius: 8px;
+            padding: 14px 16px;
+            min-height: 64px;
+        }
+
+        .output-label {
+            color: var(--clr-secondary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .output-text {
+            color: #c4b5fd;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            min-height: 44px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-action:focus-visible {
+            outline: 3px solid var(--clr-primary);
+            outline-offset: 2px;
+        }
+
+        .btn-speak {
+            background: #1a2a1a;
+            color: #4ade80;
+            border-color: #4ade80;
+        }
+
+        .btn-speak:hover {
+            background: rgba(74, 222, 128, 0.1);
+        }
+
+        .btn-clear {
+            background: #2a1a1a;
+            color: #fc8181;
+            border-color: #fc8181;
+        }
+
+        .btn-clear:hover {
+            background: rgba(252, 129, 129, 0.1);
+        }
+
+        .btn-stop {
+            background: #2a2218;
+            color: #f59e0b;
+            border-color: #f59e0b;
+        }
+
+        .btn-stop:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .btn-copy {
+            background: var(--clr-bg-card);
+            color: var(--clr-text-3);
+            border-color: var(--clr-border);
+        }
+
+        .btn-copy:hover {
+            background: var(--clr-border-hover);
+            color: #ffffff;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════════════════ */
+        
+        footer {
+            background: #0a0f1a;
+            border-top: 1px solid var(--clr-border);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+        }
+
+        .footer-text {
+            color: var(--clr-text-muted);
+            font-size: 0.78rem;
+        }
+
+        .footer-center {
+            color: var(--clr-text-3);
+            font-size: 0.78rem;
+            text-align: center;
+            flex: 1;
+        }
+
+        .wcag-badge {
+            background: var(--clr-bg-card);
+            border: 1px solid var(--clr-border);
+            color: var(--clr-text-3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           CUSTOM SCROLLBAR
+           ═══════════════════════════════════════════════════════════════ */
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--clr-bg);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--clr-border);
+            border-radius: 4px;
+            border: 2px solid var(--clr-bg);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--clr-border-hover);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ACCESSIBILITY: REDUCED MOTION
+           ═══════════════════════════════════════════════════════════════ */
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE: TABLET (768px)
+           ═══════════════════════════════════════════════════════════════ */
+        
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 16px;
+            }
+
+            .tagline {
+                display: none;
+            }
+
+            .hero {
+                padding: 40px 16px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-cta {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .features-section {
+                padding: 32px 16px;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .voice-section {
+                padding: 32px 16px;
+            }
+
+            .input-panel {
+                margin: 0;
+                padding: 20px;
+            }
+
+            textarea {
+                min-height: 100px;
+                font-size: 0.95rem;
+            }
+
+            .action-row .btn-action {
+                font-size: 0.78rem;
+                padding: 8px 12px;
+                min-height: 40px;
+            }
+
+            footer {
+                padding: 12px 16px;
+                height: auto;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-center {
+                flex-basis: 100%;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE: MOBILE (480px)
+           ═══════════════════════════════════════════════════════════════ */
+        
+        @media (max-width: 480px) {
+            nav {
+                padding: 0 12px;
+                height: 56px;
+            }
+
+            .brand-info h1 {
+                font-size: 0.95rem;
+            }
+
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            main {
+                margin-bottom: 120px;
+            }
+
+            .hero {
+                padding: 32px 16px;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                max-width: 100%;
+            }
+
+            .cta-group {
+                gap: 8px;
+            }
+
+            .btn-cta {
+                font-size: 0.9rem;
+                padding: 10px 16px;
+                min-height: 44px;
+            }
+
+            .features-section {
+                padding: 24px 12px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .section-header h2 {
+                font-size: 1.4rem;
+            }
+
+            .voice-section {
+                padding: 24px 12px;
+            }
+
+            .input-panel {
+                padding: 16px;
+                gap: 12px;
+            }
+
+            .input-label {
+                font-size: 0.85rem;
+            }
+
+            textarea {
+                min-height: 100px;
+                padding: 12px 50px 12px 12px;
+                font-size: 0.95rem;
+            }
+
+            .mic-fab {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .card-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .action-row {
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .btn-action {
+                font-size: 0.75rem;
+                padding: 8px 10px;
+                min-height: 40px;
+            }
+
+            footer {
+                padding: 12px;
+                gap: 8px;
+                height: auto;
+            }
+
+            .footer-text,
+            .footer-center {
+                font-size: 0.7rem;
+            }
+
+            .wcag-badge {
+                font-size: 0.65rem;
+                padding: 3px 10px;
+            }
+
+            /* Mobile sticky action bar */
+            .mobile-sticky-bar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--clr-bg-panel);
+                border-top: 1px solid var(--clr-border);
+                padding: 10px 12px;
+                display: flex;
+                gap: 8px;
+                justify-content: space-around;
+                z-index: 200;
+            }
+
+            .mobile-sticky-bar button {
+                flex: 1;
+                min-height: 48px;
+                border-radius: 8px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                background: var(--clr-bg-card);
+                color: var(--clr-text-3);
+                border: 1px solid var(--clr-border);
+                cursor: pointer;
+                transition: all var(--transition);
+            }
+
+            .mobile-sticky-bar button:hover {
+                background: var(--clr-border-hover);
+                color: #ffffff;
+            }
+
+            .mobile-sticky-bar button:focus-visible {
+                outline: 2px solid var(--clr-primary);
+                outline-offset: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- NAVBAR -->
+    <nav role="navigation" aria-label="Main navigation">
+        <a href="#" class="navbar-brand" aria-label="SenseKit - Accessibility for Deaf and Blind users">
+            <div class="logo-icon" aria-hidden="true">👁️👂</div>
+            <div class="brand-info">
+                <h1>SenseKit</h1>
+                <p class="tagline">See with sound. Hear with sight.</p>
+            </div>
+        </a>
+
+        <div class="nav-controls">
+            <button class="nav-button" id="vision-toggle" 
+                    aria-label="Toggle Vision Mode for high contrast and large text"
+                    aria-pressed="false" title="Vision Mode">
+                👁️
+            </button>
+            <button class="nav-button" id="deaf-toggle" 
+                    aria-label="Toggle Deaf Mode for visual-only interface"
+                    aria-pressed="false" title="Deaf Mode">
+                🤐
+            </button>
+            <button class="nav-button" id="settings-btn" 
+                    aria-label="Open settings"
+                    title="Settings">
+                ⚙️
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main id="main">
+        <!-- HERO SECTION -->
+        <section class="hero" role="region" aria-label="Hero section">
+            <h1>SenseKit — Accessibility for Deaf & Blind Users</h1>
+            <p>Real-time captions, audio descriptions, voice input, and high-contrast tools — built for those who rely on them most.</p>
+            <div class="cta-group">
+                <button class="btn-cta primary" aria-label="Start Voice Input - Navigate to voice input panel">
+                    🎤 Start Voice Input
+                </button>
+                <button class="btn-cta secondary" aria-label="Enable Captions for real-time text transcription">
+                    📝 Enable Captions
+                </button>
+            </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <section class="features-section" role="region" aria-label="Features overview">
+            <div class="section-header">
+                <h2>Core Features</h2>
+                <p>Accessibility tools designed for Deaf, Hard of Hearing, Blind, and Low Vision users</p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Deaf/HoH Feature 1: Live Captions -->
+                <div class="feature-card card deaf-1" role="article">
+                    <div class="card-top">
+                        <div class="card-icon" aria-hidden="true">📺</div>
+                        <span class="card-pill deaf">For Deaf & HoH</span>
+                    </div>
+                    <h3 class="card-title">Live Captions</h3>
+                    <p class="card-desc">Real-time transcription of audio content with speaker identification and emotion indicators.</p>
+                </div>
+
+                <!-- Deaf/HoH Feature 2: Visual Alerts -->
+                <div class="feature-card card deaf-2" role="article">
+                    <div class="card-top">
+                        <div class="card-icon" aria-hidden="true">⚡</div>
+                        <span class="card-pill deaf">For Deaf & HoH</span>
+                    </div>
+                    <h3 class="card-title">Visual Alerts</h3>
+                    <p class="card-desc">Screen flashes, color changes, and vibration patterns for notifications and alerts.</p>
+                </div>
+
+                <!-- Deaf/HoH Feature 3: Sign Language Cam -->
+                <div class="feature-card card deaf-3" role="article">
+                    <div class="card-top">
+                        <div class="card-icon" aria-hidden="true">🤟</div>
+                        <span class="card-pill deaf">For Deaf & HoH</span>
+                    </div>
+                    <h3 class="card-title">Sign Language Cam</h3>
+                    <p class="card-desc">Video relay services and interpretation tools with real-time sign language recognition.</p>
+                </div>
+
+                <!-- Blind/Low Vision Feature 1: Screen Reader -->
+                <div class="feature-card card vision-1" role="article">
+                    <div class="card-top">
+                        <div class="card-icon" aria-hidden="true">🔊</div>
+                        <span class="card-pill vision">For Blind & Low Vision</span>
+                    </div>
+                    <h3 class="card-title">Screen Reader</h3>
+                    <p class="card-desc">Advanced audio navigation with customizable voices, speeds, and content preferences.</p>
+                </div>
+
+                <!-- Blind/Low Vision Feature 2: High Contrast -->
+                <div class="feature-card card vision-2" role="article">
+                    <div class="card-top">
+                        <div class="card-icon" aria-hidden="true">◎</div>
+                        <span class="card-pill vision">For Blind & Low Vision</span>
+                    </div>
+                    <h3 class="card-title">High Contrast Themes</h3>
+                    <p class="card-desc">Multiple theme options with adjustable text sizes and enhanced visual hierarchy.</p>
+                </div>
+
+                <!-- Blind/Low Vision Feature 3: Voice Navigation -->
+                <div class="feature-card card vision-3" role="article">
+                    <div class="card-top">
+                        <div class="card-icon" aria-hidden="true">🎙️</div>
+                        <span class="card-pill vision">For Blind & Low Vision</span>
+                    </div>
+                    <h3 class="card-title">Voice Navigation</h3>
+                    <p class="card-desc">Voice commands and keyboard shortcuts to navigate and control the entire interface.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VOICE INPUT SECTION -->
+        <section class="voice-section" id="voice-input-section" role="region" aria-label="Voice and text input panel">
+            <div class="section-header">
+                <h2>Voice & Text Input</h2>
+                <p>Type or speak — each letter is read aloud in real-time</p>
+            </div>
+
+            <div class="input-panel" role="region" aria-label="Voice Input Panel">
+                <label class="input-label" for="voice-input">
+                    Start typing or press the mic button to speak
+                </label>
+
+                <div class="input-wrapper">
+                    <textarea
+                        id="voice-input"
+                        rows="4"
+                        placeholder="Your words appear here..."
+                        aria-describedby="input-live-hint"
+                        aria-live="polite"
+                    ></textarea>
+
+                    <button class="mic-fab" id="mic-btn" 
+                            aria-label="Start voice input - Press to activate microphone"
+                            aria-pressed="false" 
+                            title="Press to start recording">
+                        🎤
+                    </button>
+                </div>
+
+                <!-- Live transcription output box -->
+                <div class="output-box" 
+                     role="status" 
+                     aria-live="polite" 
+                     aria-atomic="true"
+                     aria-label="Live transcription output">
+                    <span class="output-label">Live Output</span>
+                    <p id="output-text" class="output-text">
+                        Transcribed text will appear here...
+                    </p>
+                </div>
+
+                <span id="input-live-hint" class="hint-text">
+                    Each letter is spoken aloud. Supports keyboard navigation. All processing happens locally on your device.
+                </span>
+
+                <!-- Action buttons row -->
+                <div class="action-row" role="toolbar" aria-label="Text controls">
+                    <button class="btn-action btn-speak" id="speak-all-btn"
+                            aria-label="Speak all text in the input field">
+                        🔊 Speak All
+                    </button>
+                    <button class="btn-action btn-clear" id="clear-btn"
+                            aria-label="Clear all text from the input field">
+                        🗑️ Clear
+                    </button>
+                    <button class="btn-action btn-stop" id="stop-btn"
+                            aria-label="Stop current speech playback">
+                        ⏹️ Stop
+                    </button>
+                    <button class="btn-action btn-copy" id="copy-btn"
+                            aria-label="Copy all text to clipboard">
+                        📋 Copy
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer role="contentinfo" aria-label="Footer">
+        <div class="footer-text">© 2025 SenseKit</div>
+        <div class="footer-center">Designed for Deaf, HoH, Blind & Low Vision users</div>
+        <span class="wcag-badge">✓ WCAG 2.1 AA</span>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // STATE MANAGEMENT
+        // ═══════════════════════════════════════════════════════════════
+
+        let appState = {
+            visionMode: false,
+            deafMode: false,
+            isRecording: false,
+            isSpeaking: false,
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // VOICE INPUT FUNCTIONALITY
+        // ═══════════════════════════════════════════════════════════════
+
+        const voiceInput = document.getElementById('voice-input');
+        const micBtn = document.getElementById('mic-btn');
+        const outputText = document.getElementById('output-text');
+        const speakAllBtn = document.getElementById('speak-all-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const copyBtn = document.getElementById('copy-btn');
+
+        // Speech synthesis function
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) {
+                console.warn('Speech Synthesis not supported');
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text || 'No text to speak');
+            utterance.rate = 1;
+            utterance.pitch = 1;
+            utterance.volume = 1;
+
+            utterance.onstart = () => {
+                appState.isSpeaking = true;
+                stopBtn.style.opacity = '1';
+            };
+
+            utterance.onend = () => {
+                appState.isSpeaking = false;
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Mic button functionality
+        micBtn.addEventListener('click', () => {
+            appState.isRecording = !appState.isRecording;
+            micBtn.setAttribute('aria-pressed', appState.isRecording ? 'true' : 'false');
+
+            if (appState.isRecording) {
+                // In a real app, would use Web Speech API
+                console.log('Recording started');
+                outputText.textContent = 'Listening... (simulated)';
+            } else {
+                console.log('Recording stopped');
+            }
+        });
+
+        // Speak All button
+        speakAllBtn.addEventListener('click', () => {
+            if (voiceInput.value.trim()) {
+                speakText(voiceInput.value);
+            }
+        });
+
+        // Clear button
+        clearBtn.addEventListener('click', () => {
+            voiceInput.value = '';
+            outputText.textContent = 'Cleared';
+            voiceInput.focus();
+            setTimeout(() => {
+                outputText.textContent = 'Ready for input...';
+            }, 2000);
+        });
+
+        // Stop button
+        stopBtn.addEventListener('click', () => {
+            window.speechSynthesis.cancel();
+            appState.isSpeaking = false;
+            outputText.textContent = 'Speech stopped';
+            setTimeout(() => {
+                outputText.textContent = voiceInput.value || 'Ready for input...';
+            }, 2000);
+        });
+
+        // Copy button
+        copyBtn.addEventListener('click', () => {
+            if (voiceInput.value.trim()) {
+                navigator.clipboard.writeText(voiceInput.value).then(() => {
+                    copyBtn.textContent = '✓ Copied';
+                    setTimeout(() => {
+                        copyBtn.textContent = '📋 Copy';
+                    }, 2000);
+                });
+            }
+        });
+
+        // Update output as user types
+        voiceInput.addEventListener('input', () => {
+            outputText.textContent = voiceInput.value || 'Start typing...';
+
+            // Speak each character (optional - controlled by Vision/Deaf mode)
+            if (!appState.deafMode && voiceInput.value.length > 0) {
+                const lastChar = voiceInput.value[voiceInput.value.length - 1];
+                if (/[a-zA-Z]/.test(lastChar)) {
+                    speakText(lastChar);
+                }
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // MODE TOGGLES
+        // ═══════════════════════════════════════════════════════════════
+
+        const visionToggle = document.getElementById('vision-toggle');
+        const deafToggle = document.getElementById('deaf-toggle');
+
+        visionToggle.addEventListener('click', () => {
+            appState.visionMode = !appState.visionMode;
+            visionToggle.classList.toggle('active', appState.visionMode);
+            visionToggle.setAttribute('aria-pressed', appState.visionMode ? 'true' : 'false');
+
+            if (appState.visionMode) {
+                document.documentElement.style.fontSize = '18px';
+                speakText('Vision mode enabled');
+            } else {
+                document.documentElement.style.fontSize = '16px';
+                speakText('Vision mode disabled');
+            }
+        });
+
+        deafToggle.addEventListener('click', () => {
+            appState.deafMode = !appState.deafMode;
+            deafToggle.classList.toggle('active', appState.deafMode);
+            deafToggle.setAttribute('aria-pressed', appState.deafMode ? 'true' : 'false');
+
+            if (appState.deafMode) {
+                outputText.textContent = 'Deaf Mode enabled - Using visual alerts only';
+            } else {
+                outputText.textContent = 'Deaf Mode disabled';
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // SETTINGS BUTTON
+        // ═══════════════════════════════════════════════════════════════
+
+        const settingsBtn = document.getElementById('settings-btn');
+        settingsBtn.addEventListener('click', () => {
+            alert('Settings panel would open here - customize accessibility features');
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // KEYBOARD NAVIGATION
+        // ═══════════════════════════════════════════════════════════════
+
+        document.addEventListener('keydown', (e) => {
+            // Alt + V: Toggle Vision Mode
+            if (e.altKey && e.key === 'v') {
+                visionToggle.click();
+            }
+            // Alt + D: Toggle Deaf Mode
+            if (e.altKey && e.key === 'd') {
+                deafToggle.click();
+            }
+            // Alt + M: Focus mic button
+            if (e.altKey && e.key === 'm') {
+                micBtn.focus();
+            }
+            // Escape: Blur any focused element
+            if (e.key === 'Escape') {
+                document.activeElement.blur();
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════
+
+        // Set initial focus
+        voiceInput.focus();
+
+        // Log accessibility info
+        console.log('SenseKit loaded - Keyboard shortcuts:');
+        console.log('Alt + V: Toggle Vision Mode');
+        console.log('Alt + D: Toggle Deaf Mode');
+        console.log('Alt + M: Focus Mic Button');
+        console.log('Escape: Blur focused element');
+    </script>
+</body>
+</html>

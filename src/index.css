@@ -1,0 +1,268 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Typography */
+  --sans: 'Atkinson Hyperlegible', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: 'Atkinson Hyperlegible', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, 'Courier New', monospace;
+
+  /* Default font sizes */
+  --font-size: 1rem;
+  --line-height: 1.6;
+  --letter-spacing: 0.02em;
+
+  /* WCAG AA Color System */
+  --color-primary: #4a90d9;
+  --color-primary-hover: #357abd;
+  --color-bg-panel: #1a1f2e;
+  --color-bg-card: #1a2035;
+  --color-text-primary: #e2e8f0;
+  --color-text-secondary: #a0b0c8;
+  --color-text-label: #c8d0e0;
+  --color-text-muted: #8a9ab5;
+  --color-border: #2d3a52;
+  --color-border-subtle: #4a5568;
+  --color-danger: #fc8181;
+  --color-danger-hover: #f56565;
+  --color-bg-input: #2d3348;
+  --color-bg-hover: #374060;
+  --color-button-inactive: #3d4563;
+
+  /* Default colors (light theme) */
+  --text: #1f2937;
+  --text-h: #111827;
+  --bg: #ffffff;
+  --border: #e5e7eb;
+  --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px;
+}
+
+/* Light Theme (Default) */
+[data-theme='light'] {
+  --text: #1f2937;
+  --text-h: #111827;
+  --bg: #ffffff;
+  --border: #e5e7eb;
+  color-scheme: light;
+}
+
+/* Dark Theme */
+[data-theme='dark'] {
+  --text: #f3f4f6;
+  --text-h: #f9fafb;
+  --bg: #111827;
+  --border: #374151;
+  color-scheme: dark;
+}
+
+/* High Contrast Light Theme */
+[data-theme='high-contrast'] {
+  --text: #000000;
+  --text-h: #000000;
+  --bg: #ffffff;
+  --border: #000000;
+  color-scheme: light;
+}
+
+/* Normal font size */
+[data-font-size='xs'] {
+  --font-size: 0.75rem;
+}
+
+[data-font-size='sm'] {
+  --font-size: 0.875rem;
+}
+
+[data-font-size='base'] {
+  --font-size: 1rem;
+}
+
+[data-font-size='lg'] {
+  --font-size: 1.125rem;
+}
+
+[data-font-size='xl'] {
+  --font-size: 1.25rem;
+}
+
+[data-font-size='2xl'] {
+  --font-size: 1.5rem;
+}
+
+/* Text spacing */
+[data-text-spacing='normal'] {
+  --letter-spacing: 0.02em;
+  --line-height: 1.6;
+}
+
+[data-text-spacing='wide'] {
+  --letter-spacing: 0.08em;
+  --line-height: 1.8;
+}
+
+/* Reduced motion */
+[data-reduce-motion='true'] * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+html {
+  font-family: var(--sans);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  letter-spacing: var(--letter-spacing);
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* High contrast mode specific styles */
+[data-theme='high-contrast'] {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+[data-theme='high-contrast'] button {
+  border: 3px solid #000000;
+}
+
+[data-theme='high-contrast'] input,
+[data-theme='high-contrast'] textarea,
+[data-theme='high-contrast'] select {
+  border: 3px solid #000000 !important;
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+[data-theme='high-contrast'] a {
+  text-decoration: underline;
+  color: #0066cc;
+}
+
+/* Focus styles for all interactive elements - Modern Cyan Neon Rings */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px #06b6d4, 0 0 0 6px #070b14;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px #06b6d4, 0 0 0 6px #070b14;
+}
+
+/* Ensure text is readable even with high contrast */
+[data-contrast='high'] {
+  --text: #000000;
+  --text-h: #000000;
+  --bg: #ffffff;
+}
+
+[data-contrast='ultra'] {
+  --text: #000000;
+  --text-h: #000000;
+  --bg: #ffffff;
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only:not(:focus-visible) {
+  display: none;
+}
+
+/* Skip links visible on focus */
+.focus\:not-sr-only:focus-visible {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  display: block;
+}
+
+/* Additional improvements */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Dark scrollbar for dark theme */
+[data-theme='dark'] ::-webkit-scrollbar,
+[data-theme='high-contrast'] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-track,
+[data-theme='high-contrast'] ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb,
+[data-theme='high-contrast'] ::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+  border-radius: 6px;
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover,
+[data-theme='high-contrast'] ::-webkit-scrollbar-thumb:hover {
+  background: #5a5a5a;
+}
+
+/* Smooth transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  :root {
+    --font-size: 0.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
