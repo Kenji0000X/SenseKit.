@@ -128,6 +128,12 @@ input[type="reset"],
     min-height: 100px !important;
     font-size: 0.95rem !important;
   }
+
+  /* Feature cards stay in column layout on mobile */
+  .feature-card {
+    display: flex !important;
+    flex-direction: column !important;
+  }
 }
 
 /* ════════════════════════════════════════════
@@ -157,85 +163,7 @@ input[type="reset"],
     margin: 0 auto !important;
   }
 
-  /* EACH CARD — HORIZONTAL ROW */
-  [style*="grid-template-columns"] > div {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-    gap: 12px !important;
-    padding: 14px !important;
-    overflow: visible !important;
-  }
 
-  .feature-card {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-    gap: 12px !important;
-    padding: 14px !important;
-    overflow: visible !important;
-  }
-
-  /* ICON — FIXED SIZE LEFT */
-  .feature-card > div:first-child {
-    width: 40px !important;
-    min-width: 40px !important;
-    max-width: 40px !important;
-    height: 40px !important;
-    min-height: 40px !important;
-    max-height: 40px !important;
-    flex-shrink: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 1.8rem !important;
-  }
-
-  /* TEXT — FLEX RIGHT */
-  .feature-card > div:nth-child(2),
-  .feature-card > div:nth-child(3),
-  .feature-card > div:not(:first-child) {
-    flex: 1 !important;
-    min-width: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 4px !important;
-  }
-
-  /* TEXT ELEMENTS — NO CLIPPING */
-  .feature-card h3,
-  .feature-card h2,
-  .feature-card strong {
-    font-size: 0.94rem !important;
-    font-weight: 700 !important;
-    line-height: 1.3 !important;
-    white-space: normal !important;
-    overflow: visible !important;
-    color: #f0f4ff !important;
-  }
-
-  .feature-card p {
-    font-size: 0.8rem !important;
-    line-height: 1.5 !important;
-    white-space: normal !important;
-    overflow: visible !important;
-    color: #7a8faa !important;
-    margin: 0 !important;
-  }
-
-  .feature-card * {
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
-    overflow: visible !important;
-  }
 }
 
 /* PREVENT HORIZONTAL SCROLL */
@@ -304,183 +232,108 @@ html, body, #root {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   MOBILE FIX — PREVENT COMING SOON VERTICAL TEXT BREAKING
+   FEATURE CARD — BASE STYLES
    ════════════════════════════════════════════════════════════════ */
 
-/* Override Coming Soon badge inline styles on mobile */
-@media screen and (max-width: 600px) {
-  .feature-card > div[style*="position: absolute"] {
-    position: absolute !important;
-    top: 8px !important;
-    right: 8px !important;
-    left: auto !important;
-    bottom: auto !important;
-    
-    /* Force horizontal pill layout — CRITICAL FIXES */
-    display: inline-block !important;
-    width: auto !important;
-    max-width: fit-content !important;
-    white-space: nowrap !important;
-    writing-mode: horizontal-tb !important;
-    text-orientation: mixed !important;
-    word-break: keep-all !important;
-    overflow-wrap: normal !important;
-    
-    /* Pill styling */
-    font-size: 0.55rem !important;
-    padding: 3px 8px !important;
-    border-radius: 16px !important;
-    letter-spacing: 0.04em !important;
-    text-transform: uppercase !important;
-    background: rgba(96, 165, 250, 0.15) !important;
-    border: 1px solid rgba(96, 165, 250, 0.3) !important;
-    color: #60a5fa !important;
-    
-    /* Position and stacking */
-    margin: 0 !important;
-    padding: 4px 10px !important;
-    z-index: 5 !important;
-    line-height: 1.2 !important;
-  }
+.feature-card {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  min-width: 0 !important;
 }
 
 /* ════════════════════════════════════════════════════════════════
-   MOBILE FIX — CARD WRAPPER & LAYOUT
+   MOBILE FIX — All Elements Properly Positioned
    ════════════════════════════════════════════════════════════════ */
 
 @media screen and (max-width: 600px) {
   .feature-card {
-    position: relative !important;
     display: flex !important;
     flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 8px !important;
     padding: 14px !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    overflow: visible !important;
+    gap: 8px !important;
   }
-  
-  /* All direct children must flow in column */
-  .feature-card > * {
-    width: auto !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-}
 
-/* ════════════════════════════════════════════════════════════════
-   MOBILE FIX — ICON BOX (small, fixed size at top)
-   ════════════════════════════════════════════════════════════════ */
-
-@media screen and (max-width: 600px) {
-  /* Card Top container with icon + badge */
-  .feature-card > div:first-of-type {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    gap: 10px 8px !important;
-    width: 100% !important;
-    position: relative !important;
-  }
-  
-  /* Icon box — small fixed size */
-  .feature-card > div:first-of-type > div:first-child {
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
-    max-width: 40px !important;
-    max-height: 40px !important;
-    flex-shrink: 0 !important;
-    border-radius: 10px !important;
+  /* Card top row: icon + coming soon (nth-child 2 because child 1 is speaking indicator) */
+  .feature-card > div:nth-child(2) {
     display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
-    font-size: 1.5rem !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  /* Icon stays fixed size */
+  .feature-card > div:nth-child(2) > div:first-child {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    flex-shrink: 0 !important;
     position: static !important;
   }
-  
-  /* Badge pill (FOR DEAF & HOH) — on same line or wrap */
-  .feature-card > div:first-of-type > span {
+
+  /* Coming Soon pill (next to icon) */
+  .feature-card > div:nth-child(2) > span {
     display: inline-flex !important;
     align-items: center !important;
-    height: auto !important;
     width: auto !important;
+    max-width: fit-content !important;
     white-space: nowrap !important;
-    writing-mode: horizontal-tb !important;
     word-break: keep-all !important;
-    font-size: 0.55rem !important;
-    padding: 4px 8px !important;
-    border-radius: 20px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.04em !important;
-    text-transform: uppercase !important;
-    flex-wrap: nowrap !important;
-    flex-shrink: 0 !important;
     position: static !important;
-    margin: 0 !important;
+    flex-shrink: 0 !important;
   }
-}
 
-/* ════════════════════════════════════════════════════════════════
-   MOBILE FIX — CARD TITLE (prevent word breaking)
-   ════════════════════════════════════════════════════════════════ */
-
-@media screen and (max-width: 600px) {
-  .feature-card h3,
-  .feature-card h2,
-  .feature-card strong {
-    font-size: 0.96rem !important;
-    font-weight: 700 !important;
-    line-height: 1.35 !important;
-    color: #f0f4ff !important;
+  /* Title — no overlap (child 3 is h3) */
+  .feature-card h3 {
+    width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
-    
-    /* Prevent hyphenation and weird word breaks */
+    position: static !important;
     word-break: normal !important;
-    overflow-wrap: normal !important;
     hyphens: none !important;
     -webkit-hyphens: none !important;
-    word-spacing: normal !important;
-    letter-spacing: normal !important;
-    white-space: normal !important;
-    
-    /* Ensure text flows naturally */
-    width: 100% !important;
-    display: block !important;
-    overflow: visible !important;
+    line-height: 1.3 !important;
+    color: #ffffff !important;
   }
-}
 
-/* ════════════════════════════════════════════════════════════════
-   MOBILE FIX — CARD DESCRIPTION (readable text)
-   ════════════════════════════════════════════════════════════════ */
-
-@media screen and (max-width: 600px) {
+  /* Description — readable (child 4 is p) */
   .feature-card p {
-    font-size: 0.82rem !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+    word-break: normal !important;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
     line-height: 1.55 !important;
     color: #7a8faa !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    
-    /* Natural word wrapping only */
-    word-break: normal !important;
-    overflow-wrap: break-word !important;
-    hyphens: none !important;
-    -webkit-hyphens: none !important;
-    white-space: normal !important;
-    
-    width: 100% !important;
-    display: block !important;
-    overflow: visible !important;
+  }
+
+  /* Category badge at bottom (child 5 is span:last-child) */
+  .feature-card > span:last-child {
+    margin-top: auto !important;
+    position: static !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    width: auto !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
   }
 }
+
+
+
+
+
+
+
+
 
 /* ════════════════════════════════════════════════════════════════
    MOBILE FIX — GRID (single column)

@@ -307,10 +307,10 @@ export default function App() {
                       background: '#141c2e',
                       border: `1px solid #1e2d42`,
                       borderRadius: '14px',
-                      padding: '20px',
+                      padding: '16px',
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '10px',
+                      gap: '8px',
                       transition: 'all 0.2s ease',
                       cursor: 'pointer',
                       position: 'relative',
@@ -367,36 +367,14 @@ export default function App() {
                       </div>
                     )}
 
-                    {/* Coming Soon Badge */}
-                    {(cardId === 'sign-language' || cardId === 'voice-navigation') && (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          top: '10px',
-                          left: '10px',
-                          fontSize: '0.65rem',
-                          fontWeight: 700,
-                          borderRadius: '16px',
-                          padding: '4px 12px',
-                          letterSpacing: '0.04em',
-                          textTransform: 'uppercase',
-                          background: 'rgba(96, 165, 250, 0.15)',
-                          color: '#60a5fa',
-                          border: '1px solid rgba(96, 165, 250, 0.3)',
-                          zIndex: 10,
-                        }}
-                      >
-                        Coming Soon
-                      </div>
-                    )}
-
-                    {/* Card Top: Icon + Badge */}
+                    {/* Card Top Row: Icon + Coming Soon Badge */}
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'flex-start',
                         justifyContent: 'space-between',
                         gap: '8px',
+                        width: '100%',
                       }}
                     >
                       <div
@@ -417,29 +395,28 @@ export default function App() {
                         {feature.icon}
                       </div>
                       
-                      <span
-                        style={{
-                          fontSize: '0.68rem',
-                          fontWeight: 600,
-                          borderRadius: '20px',
-                          padding: '2px 10px',
-                          letterSpacing: '0.04em',
-                          textTransform: 'uppercase',
-                          border: '1px solid',
-                          whiteSpace: 'nowrap',
-                          background: feature.category === 'deaf' 
-                            ? 'rgba(245, 158, 11, 0.1)' 
-                            : 'rgba(124, 58, 237, 0.1)',
-                          color: feature.category === 'deaf' 
-                            ? '#f59e0b' 
-                            : '#c4b5fd',
-                          borderColor: feature.category === 'deaf' 
-                            ? '#f59e0b' 
-                            : '#7c3aed',
-                        }}
-                      >
-                        {feature.category === 'deaf' ? 'For Deaf & HoH' : 'For Blind & Low Vision'}
-                      </span>
+                      {/* Coming Soon Badge — as pill next to icon */}
+                      {(cardId === 'sign-language' || cardId === 'voice-navigation') && (
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            fontSize: '0.58rem',
+                            fontWeight: 700,
+                            borderRadius: '20px',
+                            padding: '3px 9px',
+                            letterSpacing: '0.07em',
+                            textTransform: 'uppercase',
+                            background: 'rgba(74,143,255,0.12)',
+                            color: '#4a8fff',
+                            border: '1px solid rgba(74,143,255,0.3)',
+                            whiteSpace: 'nowrap',
+                            marginLeft: 'auto',
+                          }}
+                        >
+                          Coming Soon
+                        </span>
+                      )}
                     </div>
 
                     {/* Card Title */}
@@ -449,6 +426,7 @@ export default function App() {
                         fontSize: '1rem',
                         fontWeight: 700,
                         margin: 0,
+                        lineHeight: 1.3,
                       }}
                     >
                       {feature.title}
@@ -465,6 +443,33 @@ export default function App() {
                     >
                       {feature.description}
                     </p>
+
+                    {/* Category Badge at Bottom */}
+                    <span
+                      style={{
+                        fontSize: '0.62rem',
+                        fontWeight: 700,
+                        borderRadius: '20px',
+                        padding: '3px 10px',
+                        letterSpacing: '0.06em',
+                        textTransform: 'uppercase',
+                        border: '1px solid',
+                        whiteSpace: 'nowrap',
+                        width: 'fit-content',
+                        marginTop: 'auto',
+                        background: feature.category === 'deaf' 
+                          ? 'rgba(245, 158, 11, 0.1)' 
+                          : 'rgba(139, 92, 246, 0.1)',
+                        color: feature.category === 'deaf' 
+                          ? '#f59e0b' 
+                          : '#c4b5fd',
+                        borderColor: feature.category === 'deaf' 
+                          ? '#f59e0b' 
+                          : '#8b5cf6',
+                      }}
+                    >
+                      {feature.category === 'deaf' ? 'For Deaf & HoH' : 'For Blind & Low Vision'}
+                    </span>
                   </div>
                 )
               })}
