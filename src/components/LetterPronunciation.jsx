@@ -1,5 +1,4 @@
 import { useState, useRef, useContext } from 'react'
-import { Volume2, Trash2, Square } from 'lucide-react'
 
 import { speakCharacter, stopSpeech } from '../utils/enhancedSpeechHelper'
 import { A11yContext } from '../context/A11yContext'
@@ -149,36 +148,57 @@ export default function LetterPronunciation({ label = 'Type here for letter pron
 
 
       {/* Control buttons */}
-      <div className="flex gap-3 justify-center flex-wrap">
+      <div className="action-row">
+        {/* Speak All */}
         <button
+          className="action-btn btn-speak"
           onClick={handleSpeak}
           disabled={!text}
-          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-2xl font-semibold hover:from-cyan-400 hover:to-blue-500 disabled:bg-slate-800/50 disabled:text-slate-600 disabled:cursor-not-allowed focus-visible:ring-4 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070b14] transition-all shadow-[0_0_20px_rgba(6,182,212,0.2)] hover:shadow-[0_0_30px_rgba(6,182,212,0.3)]"
-          aria-label="Speak all text"
+          aria-label="Speak all text aloud"
         >
-          <Volume2 className="w-5 h-5" strokeWidth={2} />
+          <svg width="16" height="16" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" strokeWidth="2"
+            strokeLinecap="round" strokeLinejoin="round"
+            aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          </svg>
           Speak All
         </button>
 
+        {/* Clear */}
         <button
+          className="action-btn btn-clear"
           onClick={handleClear}
           disabled={!text}
-          className="flex items-center gap-2 px-6 py-3 bg-[#0c1220] text-slate-300 border border-white/10 rounded-2xl font-semibold hover:bg-[#131d35] hover:text-white disabled:bg-slate-800/50 disabled:text-slate-600 disabled:cursor-not-allowed focus-visible:ring-4 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070b14] transition-all"
-          aria-label="Clear text"
+          aria-label="Clear all text"
         >
-          <Trash2 className="w-5 h-5" strokeWidth={2} />
+          <svg width="16" height="16" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" strokeWidth="2"
+            strokeLinecap="round" strokeLinejoin="round"
+            aria-hidden="true">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6l-1 14H6L5 6"/>
+            <path d="M10 11v6M14 11v6"/>
+            <path d="M9 6V4h6v2"/>
+          </svg>
           Clear
         </button>
 
+        {/* Stop */}
         <button
+          className="action-btn btn-stop"
           onClick={stopSpeech}
-          className="flex items-center gap-2 px-6 py-3 bg-rose-500/10 text-rose-400 border border-rose-500/30 rounded-2xl font-semibold hover:bg-rose-500/20 focus-visible:ring-4 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070b14] transition-all"
-          aria-label="Stop speech"
+          aria-label="Stop speaking"
         >
-          <Square className="w-5 h-5" strokeWidth={2} />
+          <svg width="16" height="16" viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true">
+            <rect x="4" y="4" width="16" height="16" rx="2"/>
+          </svg>
           Stop
         </button>
-
       </div>
     </div>
   )

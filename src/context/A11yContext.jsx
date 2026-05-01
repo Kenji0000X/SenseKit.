@@ -21,12 +21,28 @@ const loadInitialSettings = () => {
 export function A11yProvider({ children }) {
   const [settings, setSettings] = useState(loadInitialSettings)
 
-  // Apply settings to document
+  // Apply theme class to document root
   useEffect(() => {
     const root = document.documentElement
     
-    // Apply theme
-    root.setAttribute('data-theme', settings.theme)
+    // Remove all theme classes first
+    root.classList.remove('theme-light', 'theme-dark', 'theme-high-contrast')
+    
+    // Apply the selected theme class
+    if (settings.theme === 'light') {
+      root.classList.add('theme-light')
+    } else if (settings.theme === 'high-contrast') {
+      root.classList.add('theme-high-contrast')
+    } else {
+      root.classList.add('theme-dark')
+    }
+  }, [settings.theme])
+
+  // Apply settings to document attributes
+  useEffect(() => {
+    const root = document.documentElement
+    
+    // Apply contrast level
     root.setAttribute('data-contrast', settings.contrast)
     
     // Apply font size

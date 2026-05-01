@@ -65,6 +65,140 @@
   color-scheme: light;
 }
 
+/* ── NEW THEME SYSTEM — CLASS-BASED ────────── */
+
+/* DEFAULT: DARK THEME */
+:root,
+.theme-dark {
+  --bg:           #0a0e1a;
+  --bg-panel:     #0f1624;
+  --bg-card:      #131d2e;
+  --bg-input:     #080d18;
+  --bg-elevated:  #1a2235;
+  --text-1:       #f0f4ff;
+  --text-2:       #c8d6ee;
+  --text-3:       #7a8faa;
+  --border:       rgba(255,255,255,0.07);
+  --primary:      #4a8fff;
+}
+
+/* LIGHT THEME */
+.theme-light {
+  --bg:           #f4f6fb;
+  --bg-panel:     #ffffff;
+  --bg-card:      #f0f4ff;
+  --bg-input:     #ffffff;
+  --bg-elevated:  #e8edf8;
+  --text-1:       #0d1117;
+  --text-2:       #1e2a3a;
+  --text-3:       #4a5568;
+  --border:       rgba(0,0,0,0.1);
+  --primary:      #2563eb;
+}
+
+/* HIGH CONTRAST THEME */
+.theme-high-contrast {
+  --bg:           #000000;
+  --bg-panel:     #0a0a0a;
+  --bg-card:      #111111;
+  --bg-input:     #000000;
+  --bg-elevated:  #1a1a1a;
+  --text-1:       #ffffff;
+  --text-2:       #ffffff;
+  --text-3:       #ffff00;
+  --border:       rgba(255,255,255,0.3);
+  --primary:      #00cfff;
+}
+
+/* ── APPLY VARIABLES TO ALL ELEMENTS ─────── */
+
+body {
+  background-color: var(--bg, #0a0e1a) !important;
+  color: var(--text-2, #c8d6ee) !important;
+  transition: background-color 0.25s ease, color 0.2s ease;
+}
+
+/* Navbar */
+header, nav, [class*="navbar"] {
+  background: var(--bg-panel, #0f1624) !important;
+  border-color: var(--border, rgba(255,255,255,0.07)) !important;
+}
+
+/* Cards */
+[class*="card"],
+[class*="feature"] {
+  background: var(--bg-card, #131d2e) !important;
+  border-color: var(--border, rgba(255,255,255,0.07)) !important;
+  color: var(--text-2, #c8d6ee) !important;
+}
+
+/* Card titles */
+[class*="card"] h3,
+[class*="card"] strong,
+[class*="feature"] h3 {
+  color: var(--text-1, #f0f4ff) !important;
+}
+
+/* Card descriptions */
+[class*="card"] p,
+[class*="feature"] p {
+  color: var(--text-3, #7a8faa) !important;
+}
+
+/* Input panels */
+[class*="panel"],
+[class*="input"],
+[class*="voice"] {
+  background: var(--bg-panel, #0f1624) !important;
+  border-color: var(--border, rgba(255,255,255,0.07)) !important;
+}
+
+/* Textarea */
+textarea {
+  background: var(--bg-input, #080d18) !important;
+  background-color: var(--bg-input, #080d18) !important;
+  color: var(--text-1, #f0f4ff) !important;
+  border-color: var(--border, rgba(255,255,255,0.07)) !important;
+}
+
+/* Settings panel */
+[class*="settings"] {
+  background: var(--bg-panel, #0f1624) !important;
+  border-color: var(--border, rgba(255,255,255,0.07)) !important;
+  color: var(--text-2, #c8d6ee) !important;
+}
+
+/* Footer */
+footer, [class*="footer"] {
+  background: var(--bg-panel, #0f1624) !important;
+  border-color: var(--border, rgba(255,255,255,0.07)) !important;
+}
+
+/* Smooth transition for theme changes */
+*, *::before, *::after {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
+}
+
+/* High contrast — thicker borders */
+.theme-high-contrast [class*="card"],
+.theme-high-contrast textarea,
+.theme-high-contrast [class*="panel"] {
+  border-width: 2px !important;
+  border-style: solid !important;
+}
+
+/* Light theme — softer shadows */
+.theme-light [class*="card"] {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+}
+
+/* Reduced motion — skip transitions */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+  }
+}
+
 /* Normal font size */
 [data-font-size='xs'] {
   --font-size: 0.75rem;
