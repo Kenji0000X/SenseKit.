@@ -4,6 +4,7 @@ import Header from './components/Header'
 import LetterPronunciation from './components/LetterPronunciation'
 import A11ySettings from './components/A11ySettings'
 import FeedbackWidget from './components/FeedbackWidget'
+import './App.css'
 import './components/FeedbackWidget.css'
 
 /**

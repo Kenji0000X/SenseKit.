@@ -92,7 +92,7 @@ input[type="reset"],
   }
 
   section {
-    padding: 24px 12px !important;
+    padding: 20px 12px !important;
   }
 
   h1 {
@@ -131,31 +131,34 @@ input[type="reset"],
 }
 
 /* ════════════════════════════════════════════
-   NUCLEAR OVERRIDE — MOBILE CARDS SINGLE COLUMN
-   THIS MUST OVERRIDE ALL INLINE STYLES
+   MOBILE OVERRIDE — FORCE SINGLE COLUMN CARDS
+   THIS WILL DEFINITELY WORK
    ════════════════════════════════════════════ */
 
+@media screen and (max-width: 768px) {
+  /* Target inline grid with correct attribute name */
+  [style*="grid-template-columns"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    padding: 0 16px !important;
+  }
+}
+
 @media screen and (max-width: 600px) {
-  /* Target the exact grid wrapper div with inline styles */
-  div[style*="gridTemplateColumns"],
-  div[style*="grid-template"],
-  section > div[style] {
+  /* SINGLE COLUMN ON MOBILE */
+  [style*="grid-template-columns"] {
     display: grid !important;
     grid-template-columns: 1fr !important;
-    grid-template-rows: auto !important;
     gap: 12px !important;
     padding: 0 14px 32px !important;
     width: 100% !important;
     max-width: 100vw !important;
     box-sizing: border-box !important;
-    overflow-x: hidden !important;
     margin: 0 auto !important;
   }
 
-  /* Target all child divs that are cards */
-  div[style*="gridTemplateColumns"] > div,
-  div[style*="grid-template"] > div,
-  section > div[style] > div {
+  /* EACH CARD — HORIZONTAL ROW */
+  [style*="grid-template-columns"] > div {
     display: flex !important;
     flex-direction: row !important;
     align-items: flex-start !important;
@@ -168,7 +171,6 @@ input[type="reset"],
     overflow: visible !important;
   }
 
-  /* Force feature cards to horizontal */
   .feature-card {
     display: flex !important;
     flex-direction: row !important;
@@ -180,15 +182,16 @@ input[type="reset"],
     gap: 12px !important;
     padding: 14px !important;
     overflow: visible !important;
-    height: auto !important;
   }
 
-  /* Icon container — fixed width on left */
+  /* ICON — FIXED SIZE LEFT */
   .feature-card > div:first-child {
     width: 40px !important;
     min-width: 40px !important;
+    max-width: 40px !important;
     height: 40px !important;
     min-height: 40px !important;
+    max-height: 40px !important;
     flex-shrink: 0 !important;
     display: flex !important;
     align-items: center !important;
@@ -196,7 +199,9 @@ input[type="reset"],
     font-size: 1.8rem !important;
   }
 
-  /* Text content — takes remaining space */
+  /* TEXT — FLEX RIGHT */
+  .feature-card > div:nth-child(2),
+  .feature-card > div:nth-child(3),
   .feature-card > div:not(:first-child) {
     flex: 1 !important;
     min-width: 0 !important;
@@ -205,17 +210,7 @@ input[type="reset"],
     gap: 4px !important;
   }
 
-  /* All text elements — no clipping */
-  .feature-card * {
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
-    overflow: visible !important;
-    text-overflow: unset !important;
-    max-width: 100% !important;
-  }
-
-  /* Title text */
+  /* TEXT ELEMENTS — NO CLIPPING */
   .feature-card h3,
   .feature-card h2,
   .feature-card strong {
@@ -223,246 +218,60 @@ input[type="reset"],
     font-weight: 700 !important;
     line-height: 1.3 !important;
     white-space: normal !important;
+    overflow: visible !important;
     color: #f0f4ff !important;
-    display: block !important;
   }
 
-  /* Description text */
   .feature-card p {
     font-size: 0.8rem !important;
     line-height: 1.5 !important;
-    color: #7a8faa !important;
     white-space: normal !important;
-    display: block !important;
+    overflow: visible !important;
+    color: #7a8faa !important;
     margin: 0 !important;
   }
 
-  /* Coming Soon badge */
-  .feature-card > div:first-of-type {
-    position: relative !important;
-  }
-
-  /* Remove any max-width constraints */
-  section {
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-  }
-}
-
-/* ════════════════════════════════════════════
-   EXTRA SMALL DEVICES — 375px and below
-   ════════════════════════════════════════════ */
-
-@media screen and (max-width: 375px) {
-  .feature-card {
-    padding: 12px !important;
-    gap: 10px !important;
-  }
-
-  .feature-card > div:first-child {
-    width: 36px !important;
-    min-width: 36px !important;
-    height: 36px !important;
-    min-height: 36px !important;
-  }
-
-  .feature-card h3,
-  .feature-card h2,
-  .feature-card strong {
-    font-size: 0.88rem !important;
-  }
-
-  .feature-card p {
-    font-size: 0.75rem !important;
-  }
-}
-
-/* ════════════════════════════════════════════
-   NUCLEAR OVERRIDE — MOBILE CARDS SINGLE COLUMN
-   ════════════════════════════════════════════ */
-
-@media screen and (max-width: 600px) {
-  /* Target the exact grid wrapper div with inline styles */
-  div[style*="gridTemplateColumns"],
-  div[style*="grid-template"],
-  section > div[style] {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    grid-template-rows: auto !important;
-    gap: 12px !important;
-    padding: 0 14px 32px !important;
-    width: 100% !important;
-    max-width: 100vw !important;
-    box-sizing: border-box !important;
-    overflow-x: hidden !important;
-    margin: 0 auto !important;
-  }
-
-  /* Target all child divs that are cards */
-  div[style*="gridTemplateColumns"] > div,
-  div[style*="grid-template"] > div,
-  section > div[style] > div {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-    gap: 12px !important;
-    padding: 14px !important;
-    overflow: visible !important;
-  }
-
-  /* Force feature cards to horizontal */
-  .feature-card {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-    gap: 12px !important;
-    padding: 14px !important;
-    overflow: visible !important;
-    height: auto !important;
-  }
-
-  /* Icon container — fixed width on left */
-  .feature-card > div:first-child {
-    width: 40px !important;
-    min-width: 40px !important;
-    height: 40px !important;
-    min-height: 40px !important;
-    flex-shrink: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 1.8rem !important;
-  }
-
-  /* Text content — takes remaining space */
-  .feature-card > div:not(:first-child) {
-    flex: 1 !important;
-    min-width: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 4px !important;
-  }
-
-  /* All text elements — no clipping */
   .feature-card * {
-    white-space: normal !important;
     word-break: break-word !important;
     overflow-wrap: break-word !important;
     overflow: visible !important;
-    text-overflow: unset !important;
-    max-width: 100% !important;
-  }
-
-  /* Title text */
-  .feature-card h3,
-  .feature-card h2,
-  .feature-card strong {
-    font-size: 0.94rem !important;
-    font-weight: 700 !important;
-    line-height: 1.3 !important;
-    white-space: normal !important;
-    color: #f0f4ff !important;
-    display: block !important;
-  }
-
-  /* Description text */
-  .feature-card p {
-    font-size: 0.8rem !important;
-    line-height: 1.5 !important;
-    color: #7a8faa !important;
-    white-space: normal !important;
-    display: block !important;
-    margin: 0 !important;
-  }
-
-  /* Coming Soon badge */
-  .feature-card > div:first-of-type {
-    position: relative !important;
-  }
-
-  /* Remove any max-width constraints */
-  section {
-    max-width: 100% !important;
-    overflow-x: hidden !important;
   }
 }
 
-/* ════════════════════════════════════════════
-   EXTRA SMALL DEVICES — 375px and below
-   ════════════════════════════════════════════ */
-
-@media screen and (max-width: 375px) {
-  .feature-card {
-    padding: 12px !important;
-    gap: 10px !important;
-  }
-
-  .feature-card > div:first-child {
-    width: 36px !important;
-    min-width: 36px !important;
-    height: 36px !important;
-    min-height: 36px !important;
-  }
-
-  .feature-card h3,
-  .feature-card h2,
-  .feature-card strong {
-    font-size: 0.88rem !important;
-  }
-
-  .feature-card p {
-    font-size: 0.75rem !important;
-  }
-}
-
-/* ════════════════════════════════════════════
-   PREVENT HORIZONTAL SCROLL GLOBALLY
-   ════════════════════════════════════════════ */
-
+/* PREVENT HORIZONTAL SCROLL */
 html, body, #root {
   overflow-x: hidden !important;
   max-width: 100vw !important;
-  box-sizing: border-box !important;
 }
 
 /* ════════════════════════════════════════════
    MOBILE CARDS GRID FIX
    ════════════════════════════════════════════ */
 
-/* DESKTOP — 3 columns */
-[style*="grid-template-columns: repeat(3"] {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  padding: 0 24px 40px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* TABLET — 2 columns */
-@media screen and (max-width: 768px) {
+/* LARGE DESKTOP — 3 columns for screens 1025px+ */
+@media screen and (min-width: 1025px) {
   [style*="grid-template-columns: repeat(3"] {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    padding: 0 16px 32px !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 16px !important;
   }
 }
 
-/* MOBILE — 1 column, SINGLE STACK */
-@media screen and (max-width: 540px) {
-  [style*="grid-template-columns: repeat(3"] {
+/* TABLET/MOBILE - SINGLE COLUMN FOR SCREENS 1024px AND DOWN */
+@media screen and (max-width: 1024px) {
+  [style*="grid-template-columns"] {
     grid-template-columns: 1fr !important;
-    gap: 10px !important;
-    padding: 0 12px 28px !important;
+    gap: 12px !important;
+    padding: 0 16px 32px !important;
     width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* EXTRA SMALL — Tighten padding on mobile under 480px */
+@media screen and (max-width: 480px) {
+  [style*="grid-template-columns"] {
+    gap: 8px !important;
+    padding: 0 10px 24px !important;
   }
 }
 
@@ -482,7 +291,7 @@ html, body, #root {
 /* ── CARD ON TABLET ───────────────────────── */
 @media screen and (max-width: 768px) {
   .feature-card {
-    padding: 16px !important;
+    padding: 18px !important;
     gap: 8px !important;
     border-radius: 12px !important;
     min-width: 0 !important;
@@ -491,49 +300,55 @@ html, body, #root {
   }
 }
 
-/* ── CARD ON MOBILE — horizontal row layout ── */
+/* ── CARD ON MOBILE — VERTICAL COLUMN LAYOUT ── */
 @media screen and (max-width: 540px) {
   .feature-card {
-    flex-direction: row !important;
+    flex-direction: column !important;
     align-items: flex-start !important;
-    gap: 12px !important;
-    padding: 14px !important;
+    gap: 10px !important;
+    padding: 16px !important;
     border-radius: 12px !important;
     width: 100% !important;
     min-width: 0 !important;
     box-sizing: border-box !important;
     overflow: visible !important;
+    min-height: auto !important;
   }
 }
 
-/* ── CARD ICON — stays fixed size on mobile ── */
+/* ── CARD ICON — properly sized on mobile ── */
 @media screen and (max-width: 540px) {
   .feature-card > div:first-child,
   .feature-card .card-icon,
   .feature-card .feature-icon {
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
     flex-shrink: 0 !important;
     border-radius: 10px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 1.8rem !important;
+    font-size: 1.6rem !important;
   }
 }
 
-/* ── CARD TEXT AREA — takes remaining space ── */
+/* ── CARD TEXT AREA — full width on mobile ── */
 @media screen and (max-width: 540px) {
+  .feature-card > div:nth-child(2),
+  .feature-card > div:nth-child(3),
   .feature-card > div:not(:first-child),
   .feature-card .card-content,
   .feature-card .card-body {
     flex: 1 !important;
+    width: 100% !important;
     min-width: 0 !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 4px !important;
+    gap: 6px !important;
   }
 }
 
@@ -555,11 +370,12 @@ html, body, #root {
   .feature-card h2,
   .feature-card strong,
   .feature-card .card-title {
-    font-size: 0.94rem !important;
-    line-height: 1.3 !important;
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
     font-weight: 700 !important;
     color: #f0f4ff !important;
     white-space: normal !important;
+    margin: 0 !important;
   }
 }
 
@@ -578,12 +394,14 @@ html, body, #root {
 
 @media screen and (max-width: 540px) {
   .feature-card p,
-  .feature-card .card-desc {
-    font-size: 0.8rem !important;
-    line-height: 1.5 !important;
-    color: #7a8faa !important;
+  .feature-card .card-desc,
+  .feature-card .card-description {
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+    color: #8a9ab5 !important;
     white-space: normal !important;
     display: block !important;
+    margin: 0 !important;
   }
 }
 
@@ -732,42 +550,6 @@ body,
     transition: none !important;
     animation: none !important;
     transform: none !important;
-  }
-}
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
   }
 }
 
