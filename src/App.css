@@ -62,7 +62,7 @@ input[type="reset"],
     align-items: center;
   }
 
-  [style*="grid-template-columns: repeat(3"]  {
+  [style*="grid-template-columns"] {
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
@@ -113,7 +113,7 @@ input[type="reset"],
     min-height: 44px !important;
   }
 
-  [style*="grid-template-columns: repeat(3"] {
+  [style*="grid-template-columns"] {
     grid-template-columns: 1fr !important;
     gap: 10px !important;
   }
