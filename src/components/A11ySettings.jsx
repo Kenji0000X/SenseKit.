@@ -84,7 +84,8 @@ export default function A11ySettings({ isOpen, onClose }) {
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
-          width: '280px',
+          width: 'clamp(280px, 35vw, 420px)',
+          maxWidth: '90vw',
           background: 'var(--color-bg-panel, #1a1f2e)',
           boxShadow: '4px 0 24px rgba(0,0,0,0.8)',
           transition: 'transform 0.3s ease-out',
@@ -95,7 +96,7 @@ export default function A11ySettings({ isOpen, onClose }) {
       >
 
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: 'var(--color-border, #2d3a52)' }}>
+        <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: 'var(--color-border, #2d3a52)', minHeight: '64px' }}>
           <h2 
             id="settings-title" 
             className="text-lg font-bold"
@@ -125,7 +126,7 @@ export default function A11ySettings({ isOpen, onClose }) {
         </div>
 
         {/* Tabs Navigation */}
-        <div className="flex border-b p-2" style={{ borderColor: 'var(--color-border, #2d3a52)' }}>
+        <div className="flex border-b p-2 gap-1 flex-wrap" style={{ borderColor: 'var(--color-border, #2d3a52)' }}>
           {tabs.map((tab) => {
             const Icon = tab.icon
             const isActive = activeTab === tab.id
@@ -152,7 +153,7 @@ export default function A11ySettings({ isOpen, onClose }) {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-6">
+        <div className="flex-1 overflow-y-auto" style={{ padding: 'clamp(12px, 3vw, 20px)', display: 'flex', flexDirection: 'column', gap: 'clamp(12px, 2vw, 24px)' }}>
           {/* Display Tab */}
           {activeTab === 'display' && (
             <div className="space-y-6">
@@ -173,7 +174,7 @@ export default function A11ySettings({ isOpen, onClose }) {
                   {[
                     { value: 'light', label: 'Light' },
                     { value: 'dark', label: 'Dark' },
-                    { value: 'high-contrast', label: 'High Contrast' },
+
                   ].map((theme) => (
                     <label
                       key={theme.value}
@@ -255,15 +256,18 @@ export default function A11ySettings({ isOpen, onClose }) {
                   Font Size
                 </h3>
                 <div className="grid grid-cols-3 gap-2">
-                  {['xs', 'sm', 'base', 'lg', 'xl', '2xl'].map((size) => {
-                    const isSelected = settings.fontSize === size
+                  {[
+                    { size: 'sm', label: 'S', name: 'Small' },
+                    { size: 'base', label: 'M', name: 'Medium' },
+                    { size: 'lg', label: 'L', name: 'Large' }
+                  ].map((option) => {
+                    const isSelected = settings.fontSize === option.size
                     return (
                       <button
-                        key={size}
+                        key={option.size}
                         onClick={() => {
-                          handleSettingChange('fontSize', size)
-                          const sizeLabel = size === 'xs' ? 'Extra Small' : size === 'sm' ? 'Small' : size === 'base' ? 'Medium' : size === 'lg' ? 'Large' : size === 'xl' ? 'Extra Large' : 'Extra Extra Large'
-                          SpeechEngine.speak(`Font size set to ${sizeLabel}`)
+                          updateSetting('fontSize', option.size)
+                          SpeechEngine.speak(`Font size set to ${option.name}`)
                         }}
                         className="px-2 py-2 rounded text-sm font-medium transition-all focus-visible:ring-2"
                         style={{
@@ -290,12 +294,7 @@ export default function A11ySettings({ isOpen, onClose }) {
                           }
                         }}
                       >
-                        {size === 'xs' && 'XS'}
-                        {size === 'sm' && 'S'}
-                        {size === 'base' && 'M'}
-                        {size === 'lg' && 'L'}
-                        {size === 'xl' && 'XL'}
-                        {size === '2xl' && 'XXL'}
+                        {option.label}
                       </button>
                     )
                   })}

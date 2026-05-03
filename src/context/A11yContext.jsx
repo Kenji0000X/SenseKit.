@@ -45,8 +45,17 @@ export function A11yProvider({ children }) {
     // Apply contrast level
     root.setAttribute('data-contrast', settings.contrast)
     
-    // Apply font size
+    // Apply font size - BOTH attribute AND inline style for reliability
     root.setAttribute('data-font-size', settings.fontSize)
+    
+    // Map font size to pixel value
+    const fontSizeMap = {
+      'sm': '14px',
+      'base': '16px',
+      'lg': '18px'
+    }
+    const pixelSize = fontSizeMap[settings.fontSize] || '16px'
+    root.style.fontSize = pixelSize
     
     // Apply text spacing
     root.setAttribute('data-text-spacing', settings.textSpacing)

@@ -1,4 +1,4 @@
-import { useAccessibility } from '../context/AccessibilityContext.jsx'
+import { useAccessibility } from '../context/AccessibilityContext'
 
 /**
  * Header Component - SenseKit Design
@@ -12,14 +12,21 @@ export default function Header({ onOpenSettings }) {
     safeSpeech('Settings panel opened')
   }
 
+  const handleToggleVisionMode = () => {
+    toggleVisionMode()
+    safeSpeech(`Vision mode ${!visionMode ? 'enabled' : 'disabled'}`)
+  }
+
+  const handleToggleDeafMode = () => {
+    toggleDeafMode()
+    safeSpeech(`Deaf mode ${!deafMode ? 'enabled' : 'disabled'}`)
+  }
+
   return (
       <header 
-        className="fixed top-0 left-0 right-0 z-30"
+        className="fixed top-0 left-0 right-0 z-30 header"
         style={{
           height: '96px',
-          background: '#0d1117',
-          borderBottom: '1px solid #1e2a3a',
-          boxShadow: '0 2px 12px rgba(0,0,0,0.4)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -65,8 +72,8 @@ export default function Header({ onOpenSettings }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         {/* Vision Mode Toggle */}
         <button
-          onClick={toggleVisionMode}
-          className={`transition-all`}
+          onClick={handleToggleVisionMode}
+          className="transition-all nav-btn"
           aria-label="Toggle Vision Mode for high contrast and large text"
           aria-pressed={visionMode}
           title="Vision Mode"
@@ -92,7 +99,6 @@ export default function Header({ onOpenSettings }) {
             if (!visionMode) e.currentTarget.style.background = '#141c2e'
             if (!visionMode) e.currentTarget.style.color = '#a0b4cc'
           }}
-          className={`nav-btn ${visionMode ? 'mode-active' : ''}`}
           onFocus={(e) => {
             e.currentTarget.style.outline = '3px solid #4a90d9'
             e.currentTarget.style.outlineOffset = '2px'
@@ -106,8 +112,8 @@ export default function Header({ onOpenSettings }) {
 
         {/* Deaf Mode Toggle */}
         <button
-          onClick={toggleDeafMode}
-          className={`transition-all`}
+          onClick={handleToggleDeafMode}
+          className="transition-all nav-btn"
           aria-label="Toggle Deaf Mode for visual-only interface"
           aria-pressed={deafMode}
           title="Deaf Mode"
@@ -133,7 +139,6 @@ export default function Header({ onOpenSettings }) {
             if (!deafMode) e.currentTarget.style.background = '#141c2e'
             if (!deafMode) e.currentTarget.style.color = '#a0b4cc'
           }}
-          className={`nav-btn ${deafMode ? 'mode-active-deaf' : ''}`}
           onFocus={(e) => {
             e.currentTarget.style.outline = '3px solid #4a90d9'
             e.currentTarget.style.outlineOffset = '2px'

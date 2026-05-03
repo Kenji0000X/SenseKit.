@@ -20,6 +20,50 @@ export function AccessibilityProvider({ children }) {
       === 'true';
   });
 
+  const [fontSize, setFontSize] = useState(() => {
+    // Check both storage keys for backward compatibility
+    const sensekitSize = localStorage.getItem('sensekit-fontSize');
+    const a11ySettings = localStorage.getItem('pwd_a11y_settings');
+    
+    if (sensekitSize) return sensekitSize;
+    
+    if (a11ySettings) {
+      try {
+        const parsed = JSON.parse(a11ySettings);
+        return parsed.fontSize || 'base';
+      } catch (e) {
+        return 'base';
+      }
+    }
+    
+    return 'base';
+  });
+
+  // ── FONT SIZE EFFECT ──────────────────────
+  useEffect(() => {
+    const root = document.documentElement;
+    
+    // Save to both storage keys for synchronization
+    localStorage.setItem('sensekit-fontSize', fontSize);
+    
+    // Update pwd_a11y_settings with fontSize
+    try {
+      const a11ySettings = localStorage.getItem('pwd_a11y_settings');
+      const parsed = a11ySettings ? JSON.parse(a11ySettings) : {};
+      parsed.fontSize = fontSize;
+      localStorage.setItem('pwd_a11y_settings', JSON.stringify(parsed));
+    } catch (e) {
+      console.error('Failed to sync fontSize to A11yContext storage:', e);
+    }
+    
+    root.className = root.className.replace(/font-\w+/, '') + ` font-${fontSize}`;
+    
+    // Set data-font-size attribute for Vision Mode CSS selectors
+    root.setAttribute('data-font-size', fontSize);
+    
+    SpeechEngine.speak(`Font size set to ${fontSize}`);
+  }, [fontSize]);
+
   // ── VISION MODE EFFECT ─────────────────────
   useEffect(() => {
     const root = document.documentElement;
@@ -130,6 +174,8 @@ export function AccessibilityProvider({ children }) {
       deafMode,
       toggleVisionMode,
       toggleDeafMode,
+      fontSize,
+      setFontSize,
       safeSpeech,
       showVisualCaption,
       showVisualAlert,
@@ -201,3 +247,4 @@ export function useAccessibility() {
   );
   return ctx;
 }
+

@@ -4,6 +4,7 @@ import './index.css'
 import './styles/sensekit.css'
 import './styles/settings.css'
 import './styles/components.css'
+import './styles/accessibility-modes.css'
 import { AccessibilityProvider } from './context/AccessibilityContext.jsx'
 import App from './App.jsx'
 

@@ -115,8 +115,8 @@ export default function App() {
   });
 
   return (
-    <A11yProvider>
-      <div style={{ minHeight: '100vh', background: '#0d1117', color: 'white' }}>
+<A11yProvider>
+      <div className="app-root" style={{ minHeight: '100vh' }}>
         {/* Skip to main content link */}
         <a
           href="#main-content"
@@ -146,11 +146,11 @@ export default function App() {
               textAlign: 'center',
             }}
           >
-            <h1 
+              <h1 
               style={{
                 fontSize: 'clamp(1.8rem, 4vw, 2.6rem)',
                 fontWeight: 800,
-                color: '#ffffff',
+                color: 'var(--text-1, #ffffff)',
                 letterSpacing: '-0.02em',
                 marginBottom: '20px',
                 lineHeight: 1.2,
@@ -159,13 +159,16 @@ export default function App() {
               SenseKit — Accessibility for Deaf & Blind Users
             </h1>
             
-            <p 
+              <p 
+              data-description="hero"
               style={{
-                color: '#a0b4cc',
+                color: 'var(--text-2, #c8d6ee)',
                 fontSize: '1rem',
                 maxWidth: '580px',
                 margin: '0 auto 32px',
                 lineHeight: 1.7,
+                fontWeight: '600',
+                letterSpacing: '0.3px',
               }}
             >
               Real-time captions, audio descriptions, voice input, and high-contrast tools — built for those who rely on them most.
@@ -259,28 +262,31 @@ export default function App() {
 
           {/* Features Section */}
           <section
+            className="features-section"
             style={{
               padding: '48px 32px',
-              background: '#0d1117',
             }}
           >
             <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-              <h2
+                <h2
                 style={{
                   fontSize: 'clamp(1.8rem, 3vw, 2rem)',
                   fontWeight: 800,
-                  color: '#ffffff',
+                  color: 'var(--text-1, #ffffff)',
                   marginBottom: '12px',
                 }}
               >
                 Core Features
               </h2>
               <p
+                data-description="core"
                 style={{
-                  color: '#a0b4cc',
+                  color: 'var(--text-2, #c8d6ee)',
                   fontSize: '1rem',
                   maxWidth: '600px',
                   margin: '0 auto',
+                  fontWeight: '600',
+                  letterSpacing: '0.3px',
                 }}
               >
                 Accessibility tools designed for Deaf, Hard of Hearing, Blind, and Low Vision users
@@ -491,9 +497,9 @@ export default function App() {
           {/* Voice Input Section */}
           <section
             id="voice-input-section"
+            className="voice-section"
             style={{
               padding: '48px 32px',
-              background: '#0d1117',
             }}
           >
             <div style={{ textAlign: 'center', marginBottom: '32px' }}>
@@ -501,18 +507,21 @@ export default function App() {
                 style={{
                   fontSize: 'clamp(1.8rem, 3vw, 2rem)',
                   fontWeight: 800,
-                  color: '#ffffff',
+                  color: 'var(--text-1, #ffffff)',
                   marginBottom: '12px',
                 }}
               >
                 Voice & Text Input
               </h2>
               <p
+                data-description="voice"
                 style={{
-                  color: '#a0b4cc',
+                  color: 'var(--text-2, #c8d6ee)',
                   fontSize: '1rem',
                   maxWidth: '600px',
                   margin: '0 auto',
+                  fontWeight: '600',
+                  letterSpacing: '0.3px',
                 }}
               >
                 Type or speak — each letter is read aloud in real-time
@@ -520,11 +529,8 @@ export default function App() {
             </div>
 
             <div
+              className="input-panel"
               style={{
-                background: '#111827',
-                border: '1px solid #1e2d42',
-                borderRadius: '16px',
-                padding: '28px',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '16px',

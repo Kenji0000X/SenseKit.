@@ -1,0 +1,402 @@
+/* ════════════════════════════════════════════════════════════════
+   SENSEKIT ACCESSIBILITY MODES
+   Vision Mode: High Contrast + Large Text + TTS on Hover
+   Deaf Mode: Visual Alerts + Captions Only
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── VISION MODE ────────────────────────────────────────────────── */
+html.vision-mode {
+  --bg:              #000000;
+  --bg-panel:        #000000;
+  --bg-card:         #0a0a0a;
+  --bg-input:        #000000;
+  --bg-elevated:     #1a1a1a;
+
+  --text-1:          #ffff00;
+  --text-2:          #ffffff;
+  --text-3:          #ffff00;
+  --text-muted:      #cccccc;
+
+  --border:          #ffff00;
+  --border-hover:    #ffff00;
+  --border-focus:    #ffff00;
+
+  --primary:         #ffff00;
+  --primary-dim:     rgba(255,255,0,0.2);
+  --secondary:       #ffffff;
+  --secondary-dim:   rgba(255,255,255,0.2);
+}
+
+/* Vision Mode: Apply 20% font size increase to each size option */
+html.vision-mode[data-font-size="sm"] {
+  font-size: 16.8px !important; /* 14px + 20% */
+}
+
+html.vision-mode[data-font-size="base"],
+html.vision-mode:not([data-font-size]) {
+  font-size: 19.2px !important; /* 16px + 20% */
+}
+
+html.vision-mode[data-font-size="lg"] {
+  font-size: 21.6px !important; /* 18px + 20% */
+}
+
+/* ── VISION MODE: Light Theme Support ────────────────────────────── */
+/* When Vision Mode is active with light theme */
+html.theme-light.vision-mode {
+  --bg:              #ffffff;
+  --bg-panel:        #f8f8f8;
+  --bg-card:         #ffffff;
+  --bg-input:        #ffffff;
+  --bg-elevated:     #eeeeee;
+
+  --text-1:          #000080; /* Dark blue */
+  --text-2:          #000000; /* Black */
+  --text-3:          #000080;
+  --text-muted:      #333333;
+
+  --border:          #000080;
+  --border-hover:    #000080;
+  --border-focus:    #000080;
+
+  --primary:         #000080;
+  --primary-dim:     rgba(0,0,128,0.2);
+  --secondary:       #000000;
+  --secondary-dim:   rgba(0,0,0,0.2);
+}
+
+html.theme-light.vision-mode body {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+html.theme-light.vision-mode h1,
+html.theme-light.vision-mode h2,
+html.theme-light.vision-mode h3,
+html.theme-light.vision-mode h4,
+html.theme-light.vision-mode h5,
+html.theme-light.vision-mode h6 {
+  color: #000080 !important;
+}
+
+html.theme-light.vision-mode button {
+  background: #000080 !important;
+  color: #ffffff !important;
+  border: 3px solid #000080 !important;
+}
+
+html.theme-light.vision-mode input,
+html.theme-light.vision-mode textarea,
+html.theme-light.vision-mode select {
+  background: #ffffff !important;
+  color: #000080 !important;
+  border: 3px solid #000080 !important;
+}
+
+/* VISION MODE — Element-specific styles */
+html.vision-mode body {
+  background: #000000 !important;
+  color: #ffff00 !important;
+  font-weight: 600;
+  font-size: inherit !important;
+}
+
+html.vision-mode h1,
+html.vision-mode h2,
+html.vision-mode h3,
+html.vision-mode h4,
+html.vision-mode h5,
+html.vision-mode h6 {
+  color: #ffff00 !important;
+  font-weight: 700 !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+html.vision-mode p,
+html.vision-mode span,
+html.vision-mode label,
+html.vision-mode li {
+  color: #ffffff !important;
+}
+
+/* Make description paragraphs bright yellow for maximum contrast */
+html.vision-mode section p {
+  color: #ffff00 !important;
+  font-weight: 600 !important;
+}
+
+html.vision-mode section h2 + p,
+html.vision-mode section h1 + p {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+/* ── VISION MODE: DESCRIPTION TEXT ────────── */
+/* Maximum contrast for key description text */
+html.vision-mode p[data-description="hero"],
+html.vision-mode p[data-description="core"],
+html.vision-mode p[data-description="voice"] {
+  color: #ffff00 !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 10px rgba(255,255,0,0.5), 2px 2px 4px rgba(0,0,0,0.8) !important;
+  letter-spacing: 0.5px !important;
+  line-height: 1.8 !important;
+  background: rgba(0,0,0,0.3) !important;
+  padding: 8px 12px !important;
+  border-radius: 4px !important;
+  border-left: 4px solid #ffff00 !important;
+}
+
+html.vision-mode button {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  border: 3px solid #ffff00 !important;
+  font-weight: 700 !important;
+  padding: 12px 20px !important;
+}
+
+html.vision-mode button:hover,
+html.vision-mode button:focus {
+  background: #ffffff !important;
+  box-shadow: 0 0 20px rgba(255,255,0,0.8) !important;
+}
+
+html.vision-mode input,
+html.vision-mode textarea,
+html.vision-mode select {
+  background: #1a1a1a !important;
+  color: #ffff00 !important;
+  border: 3px solid #ffff00 !important;
+  font-weight: 600;
+}
+
+html.vision-mode input::placeholder,
+html.vision-mode textarea::placeholder {
+  color: #cccccc !important;
+}
+
+html.vision-mode [role="button"],
+html.vision-mode [role="link"] {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  padding: 8px 16px !important;
+  border-radius: 4px !important;
+}
+
+html.vision-mode .feature-card,
+html.vision-mode [class*="card"] {
+  background: #1a1a1a !important;
+  border: 3px solid #ffff00 !important;
+  color: #ffffff !important;
+}
+
+html.vision-mode header {
+  background: #000000 !important;
+  border-bottom: 3px solid #ffff00 !important;
+}
+
+html.vision-mode nav {
+  background: #0a0a0a !important;
+  border: 3px solid #ffff00 !important;
+}
+
+html.vision-mode .vision-mode-indicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #ffff00 !important;
+  color: #000000 !important;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  z-index: 5000;
+  box-shadow: 0 0 20px rgba(255,255,0,0.6);
+}
+
+/* VISION MODE — Links */
+html.vision-mode a {
+  color: #ffff00 !important;
+  text-decoration: underline !important;
+  font-weight: 600;
+}
+
+html.vision-mode a:hover,
+html.vision-mode a:focus {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  text-decoration: none;
+  padding: 2px 4px;
+}
+
+/* VISION MODE — Focus states (critical for accessibility) */
+html.vision-mode *:focus-visible {
+  outline: 4px solid #ffff00 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 15px rgba(255,255,0,0.8) !important;
+}
+
+/* VISION MODE — Dyslexic-friendly font option */
+html.vision-mode.dyslexic-font {
+  font-family: 'OpenDyslexic', 'Arial', sans-serif !important;
+}
+
+/* VISION MODE — Text-to-Speech Hover Indicator */
+html.vision-mode [data-tts-enabled]:hover {
+  background-color: rgba(255,255,0,0.2) !important;
+  text-shadow: 0 0 10px rgba(255,255,0,0.8) !important;
+}
+
+/* ── DEAF MODE ──────────────────────────────────────────────────── */
+html.deaf-mode {
+  /* Keep existing theme but enable visual overlays */
+}
+
+html.deaf-mode body {
+  /* No audio cues — rely on visual feedback */
+}
+
+/* DEAF MODE — Disable all audio */
+html.deaf-mode audio {
+  display: none !important;
+}
+
+/* DEAF MODE — Visual notification area */
+html.deaf-mode .deaf-mode-indicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #7c3aed;
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  z-index: 5000;
+  border: 2px solid #c4b5fd;
+}
+
+/* DEAF MODE — Caption styling */
+#visual-caption {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+}
+
+#visual-caption.caption-show {
+  opacity: 1 !important;
+  transform: translateX(-50%) translateY(0) !important;
+  animation: caption-slide-in 0.3s ease !important;
+}
+
+@keyframes caption-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* DEAF MODE — Flash animation */
+#visual-flash.flash-active {
+  opacity: 0.4 !important;
+  animation: visual-flash 0.6s ease !important;
+}
+
+@keyframes visual-flash {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.4; }
+}
+
+/* DEAF MODE — Button feedback (no audio, only visual) */
+html.deaf-mode button:active,
+html.deaf-mode [role="button"]:active {
+  box-shadow: 0 0 20px rgba(74,143,255,0.6) !important;
+  transform: scale(0.98) !important;
+}
+
+/* ── COMBINED MODES (Vision + Deaf) ────────────────────────────── */
+html.vision-mode.deaf-mode {
+  --text-1: #ffff00;
+  --text-2: #ffffff;
+  font-size: 19.2px !important;
+}
+
+html.vision-mode.deaf-mode .deaf-mode-indicator {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+}
+
+/* ── UTILITY CLASSES ────────────────────────────────────────────── */
+
+/* Mark elements that support TTS in Vision Mode */
+[data-tts-enabled] {
+  cursor: help;
+}
+
+html.vision-mode [data-tts-enabled]::after {
+  content: ' [Hover to hear]';
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+/* Skip screen reader announcements in Deaf Mode */
+html.deaf-mode .sr-only {
+  display: none !important;
+}
+
+/* Reduced motion support (respects prefers-reduced-motion) */
+@media (prefers-reduced-motion: reduce) {
+  html.vision-mode,
+  html.deaf-mode,
+  html.vision-mode *,
+  html.deaf-mode * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── PRINT MODE (Accessibility) ────────────────────────────────── */
+@media print {
+  html.vision-mode,
+  html.deaf-mode {
+    background: white !important;
+    color: black !important;
+  }
+
+  html.vision-mode button,
+  html.deaf-mode button {
+    border: 2px solid black !important;
+  }
+}
+
+/* ── HIGH CONTRAST ADJUSTMENT ──────────────────────────────────── */
+@media (prefers-contrast: more) {
+  html.vision-mode {
+    --primary: #ffff00;
+    --text-1: #ffff00;
+  }
+
+  html.vision-mode button {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.9) !important;
+  }
+}
+
+/* ── FORCED COLORS MODE (Windows High Contrast) ────────────────── */
+@media (forced-colors: active) {
+  html.vision-mode {
+    --bg: Canvas;
+    --text-1: Highlight;
+    --text-2: CanvasText;
+    --border: Highlight;
+  }
+
+  html.vision-mode button {
+    background: Highlight !important;
+    color: Canvas !important;
+    border: 2px solid CanvasText !important;
+  }
+}

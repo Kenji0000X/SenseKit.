@@ -3,7 +3,8 @@
   background: #0f1624 !important;
   border: 1px solid rgba(255,255,255,0.07) !important;
   border-radius: 16px !important;
-  width: 300px !important;
+  width: clamp(280px, 35vw, 420px) !important;
+  max-width: 90vw !important;
   max-height: 90vh !important;
   overflow-y: auto !important;
   box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(74,143,255,0.08) !important;
@@ -17,7 +18,8 @@
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  padding: 18px 20px 14px !important;
+  padding: clamp(12px, 3vw, 18px) clamp(16px, 3vw, 20px) !important;
+  min-height: 64px !important;
   border-bottom: 1px solid rgba(255,255,255,0.06) !important;
   position: sticky !important;
   top: 0 !important;
@@ -32,12 +34,15 @@
   color: #f0f4ff !important;
   letter-spacing: -0.01em !important;
   margin: 0 !important;
+  white-space: nowrap !important;
 }
 
 /* Close (X) button */
 [role="dialog"] button[aria-label="Close settings"] {
-  width: 32px !important;
-  height: 32px !important;
+  width: clamp(32px, 8vw, 40px) !important;
+  height: clamp(32px, 8vw, 40px) !important;
+  min-width: clamp(32px, 8vw, 40px) !important;
+  min-height: clamp(32px, 8vw, 40px) !important;
   border-radius: 8px !important;
   background: rgba(255,255,255,0.05) !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
@@ -65,28 +70,29 @@
 /* ── DISPLAY / AUDIO / PRIVACY TABS ──────── */
 [role="dialog"] > div:nth-child(2) {
   display: flex !important;
-  gap: 4px !important;
-  padding: 12px 16px !important;
+  gap: clamp(4px, 1vw, 6px) !important;
+  padding: clamp(8px, 2vw, 12px) clamp(12px, 2vw, 16px) !important;
   border-bottom: 1px solid rgba(255,255,255,0.06) !important;
   background: rgba(0,0,0,0.2) !important;
+  flex-wrap: wrap !important;
 }
 
 [role="dialog"] [role="tab"] {
   flex: 1 !important;
-  min-height: 36px !important;
-  padding: 8px 10px !important;
+  min-height: clamp(32px, 6vw, 40px) !important;
+  padding: clamp(6px, 1.5vw, 10px) clamp(8px, 2vw, 12px) !important;
   border-radius: 8px !important;
   border: 1px solid transparent !important;
   background: transparent !important;
   color: #7a8faa !important;
-  font-size: 0.78rem !important;
+  font-size: clamp(0.7rem, 1.5vw, 0.9rem) !important;
   font-weight: 600 !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 5px !important;
+  gap: clamp(3px, 1vw, 6px) !important;
   letter-spacing: 0.01em !important;
   white-space: nowrap !important;
 }
@@ -328,6 +334,838 @@
 [role="dialog"] > div:last-child button:last-child:focus-visible {
   outline: 2px solid #ffffff !important;
   outline-offset: 2px !important;
+}
+
+/* ── REDUCED MOTION SUPPORT ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+  [role="dialog"],
+  [role="dialog"] *,
+  [role="dialog"] *::before,
+  [role="dialog"] *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   LIGHT MODE SETTINGS PANEL
+   ════════════════════════════════════════════════════════════════ */
+:root.theme-light [role="dialog"] {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.15), 0 0 0 1px rgba(30,64,175,0.08) !important;
+}
+
+:root.theme-light [role="dialog"] > div:first-child {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+:root.theme-light [role="dialog"] h2 {
+  color: #0f172a !important;
+}
+
+:root.theme-light [role="dialog"] button[aria-label="Close settings"] {
+  background: rgba(30,64,175,0.05) !important;
+  border: 1px solid rgba(30,64,175,0.1) !important;
+  color: #475569 !important;
+}
+
+:root.theme-light [role="dialog"] button[aria-label="Close settings"]:hover {
+  background: rgba(248,113,113,0.08) !important;
+  border-color: rgba(248,113,113,0.2) !important;
+  color: #f87171 !important;
+}
+
+:root.theme-light [role="dialog"] > div:nth-child(2) {
+  background: #f8fafc !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+:root.theme-light [role="dialog"] [role="tab"] {
+  color: #64748b !important;
+}
+
+:root.theme-light [role="dialog"] [role="tab"]:hover {
+  color: #1e293b !important;
+  background: rgba(30,64,175,0.05) !important;
+}
+
+:root.theme-light [role="dialog"] [role="tab"][aria-selected="true"] {
+  background: rgba(30,64,175,0.08) !important;
+  border-color: rgba(30,64,175,0.2) !important;
+  color: #1e40af !important;
+}
+
+:root.theme-light [role="dialog"] h3 {
+  color: #64748b !important;
+}
+
+:root.theme-light [role="dialog"] label {
+  color: #1e293b !important;
+}
+
+:root.theme-light [role="dialog"] label:hover {
+  background: rgba(30,64,175,0.05) !important;
+  border-color: rgba(30,64,175,0.1) !important;
+}
+
+:root.theme-light [role="dialog"] input[type="radio"] {
+  border-color: #cbd5e1 !important;
+}
+
+:root.theme-light [role="dialog"] input[type="radio"]:checked {
+  border-color: #1e40af !important;
+  background: #1e40af !important;
+  box-shadow: inset 0 0 0 3px #ffffff !important;
+}
+
+:root.theme-light [role="dialog"] label span {
+  color: #1e293b !important;
+}
+
+:root.theme-light [role="dialog"] > div:nth-child(3) > div {
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+:root.theme-light [role="dialog"] > div:nth-child(3) > div button {
+  background: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+:root.theme-light [role="dialog"] > div:nth-child(3) > div button:hover {
+  background: #e0e7ff !important;
+  border-color: #c7d2fe !important;
+  color: #1e40af !important;
+}
+
+:root.theme-light [role="dialog"] > div:nth-child(3) > div button[aria-pressed="true"] {
+  background: #1e40af !important;
+  border-color: #1e40af !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(30,64,175,0.2) !important;
+}
+
+:root.theme-light [role="dialog"] select {
+  background-color: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #1e293b !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+}
+
+:root.theme-light [role="dialog"] select:hover {
+  border-color: #cbd5e1 !important;
+  background-color: #e0e7ff !important;
+}
+
+:root.theme-light [role="dialog"] select:focus {
+  border-color: #1e40af !important;
+  box-shadow: 0 0 0 3px rgba(30,64,175,0.1) !important;
+}
+
+:root.theme-light [role="dialog"] select option {
+  background: #ffffff !important;
+  color: #1e293b !important;
+}
+
+:root.theme-light [role="dialog"] > div:last-child {
+  background: #ffffff !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+:root.theme-light [role="dialog"] > div:last-child button:first-child {
+  background: rgba(239,68,68,0.05) !important;
+  border: 1px solid rgba(239,68,68,0.2) !important;
+  color: #dc2626 !important;
+}
+
+:root.theme-light [role="dialog"] > div:last-child button:first-child:hover {
+  background: rgba(239,68,68,0.1) !important;
+  border-color: rgba(239,68,68,0.3) !important;
+}
+
+:root.theme-light [role="dialog"] > div:last-child button:last-child {
+  background: #1e40af !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(30,64,175,0.2) !important;
+}
+
+:root.theme-light [role="dialog"] > div:last-child button:last-child:hover {
+  background: #1e3a8a !important;
+  box-shadow: 0 6px 18px rgba(30,64,175,0.3) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   HIGH CONTRAST MODE SETTINGS PANEL
+   ════════════════════════════════════════════════════════════════ */
+:root.theme-high-contrast [role="dialog"] {
+  background: #ffffff !important;
+  border: 3px solid #000000 !important;
+  box-shadow: none !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:first-child {
+  background: #ffffff !important;
+  border-bottom: 3px solid #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] h2 {
+  color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] button[aria-label="Close settings"] {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:nth-child(2) {
+  background: #ffffff !important;
+  border-bottom: 2px solid #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] [role="tab"] {
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] [role="tab"]:hover {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+:root.theme-high-contrast [role="dialog"] [role="tab"][aria-selected="true"] {
+  background: #000000 !important;
+  border-color: #000000 !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] h3 {
+  color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] label {
+  border: 1px solid #000000 !important;
+  color: #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] input[type="radio"] {
+  border: 3px solid #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] input[type="radio"]:checked {
+  background: #000000 !important;
+  box-shadow: inset 0 0 0 3px #ffffff !important;
+}
+
+:root.theme-high-contrast [role="dialog"] label span {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:nth-child(3) > div {
+  border-bottom: 2px solid #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:nth-child(3) > div button {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:nth-child(3) > div button[aria-pressed="true"] {
+  background: #000000 !important;
+  border: 2px solid #000000 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+:root.theme-high-contrast [role="dialog"] select {
+  background-color: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+}
+
+:root.theme-high-contrast [role="dialog"] select:focus {
+  outline: 3px solid #000000 !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:last-child {
+  background: #ffffff !important;
+  border-top: 2px solid #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:last-child button {
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:last-child button:first-child {
+  background: #ffffff !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:last-child button:last-child {
+  background: #000000 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   VISION MODE (DARK) SETTINGS PANEL
+   ════════════════════════════════════════════════════════════════ */
+html.vision-mode [role="dialog"] {
+  background: #000000 !important;
+  border: 4px solid #ffff00 !important;
+  box-shadow: 0 0 30px rgba(255,255,0,0.5) !important;
+  font-size: 19.2px !important;
+}
+
+html.vision-mode [role="dialog"] > div:first-child {
+  background: #000000 !important;
+  border-bottom: 3px solid #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] h2 {
+  color: #ffff00 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 0 10px rgba(255,255,0,0.5) !important;
+}
+
+html.vision-mode [role="dialog"] button[aria-label="Close settings"] {
+  background: transparent !important;
+  border: 2px solid #ffff00 !important;
+  color: #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] button[aria-label="Close settings"]:hover {
+  background: #ffff00 !important;
+  color: #000000 !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(2) {
+  background: #0a0a0a !important;
+  border-bottom: 2px solid #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] [role="tab"] {
+  color: #ffffff !important;
+  border: 1px solid transparent !important;
+  font-weight: 600 !important;
+}
+
+html.vision-mode [role="dialog"] [role="tab"]:hover {
+  background: rgba(255,255,0,0.1) !important;
+  color: #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] [role="tab"][aria-selected="true"] {
+  background: rgba(255,255,0,0.15) !important;
+  border-bottom: 3px solid #ffff00 !important;
+  color: #ffff00 !important;
+  font-weight: 700 !important;
+}
+
+html.vision-mode [role="dialog"] h3 {
+  color: #ffff00 !important;
+  font-weight: 700 !important;
+}
+
+html.vision-mode [role="dialog"] label {
+  border: 2px solid #ffff00 !important;
+  color: #ffffff !important;
+}
+
+html.vision-mode [role="dialog"] label:hover {
+  background: rgba(255,255,0,0.1) !important;
+}
+
+html.vision-mode [role="dialog"] input[type="radio"] {
+  border: 3px solid #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] input[type="radio"]:checked {
+  background: #ffff00 !important;
+  box-shadow: inset 0 0 0 3px #000000 !important;
+}
+
+html.vision-mode [role="dialog"] label span {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(3) > div {
+  border-bottom: 2px solid #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(3) > div button {
+  background: #0a0a0a !important;
+  border: 3px solid #ffff00 !important;
+  color: #ffff00 !important;
+  font-weight: 700 !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(3) > div button:hover {
+  background: #ffff00 !important;
+  color: #000000 !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(3) > div button[aria-pressed="true"] {
+  background: #ffff00 !important;
+  border: 3px solid #ffff00 !important;
+  color: #000000 !important;
+  box-shadow: 0 0 20px rgba(255,255,0,0.6) !important;
+}
+
+html.vision-mode [role="dialog"] select {
+  background-color: #0a0a0a !important;
+  border: 3px solid #ffff00 !important;
+  color: #ffff00 !important;
+  font-weight: 700 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ffff00' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+}
+
+html.vision-mode [role="dialog"] select:focus {
+  outline: 4px solid #ffff00 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 20px rgba(255,255,0,0.5) !important;
+}
+
+html.vision-mode [role="dialog"] select option {
+  background: #0a0a0a !important;
+  color: #ffff00 !important;
+  font-weight: 700 !important;
+}
+
+html.vision-mode [role="dialog"] > div:last-child {
+  background: #000000 !important;
+  border-top: 2px solid #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] > div:last-child button {
+  border: 3px solid #ffff00 !important;
+  color: #ffff00 !important;
+  font-weight: 700 !important;
+  background: #0a0a0a !important;
+}
+
+html.vision-mode [role="dialog"] > div:last-child button:first-child:hover {
+  background: #ffff00 !important;
+  color: #000000 !important;
+}
+
+html.vision-mode [role="dialog"] > div:last-child button:last-child:hover {
+  background: #ffff00 !important;
+  color: #000000 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   VISION MODE (LIGHT) SETTINGS PANEL
+   ════════════════════════════════════════════════════════════════ */
+:root.theme-light.vision-mode [role="dialog"] {
+  background: #ffffff !important;
+  border: 4px solid #000080 !important;
+  box-shadow: 0 0 30px rgba(0,0,128,0.3) !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:first-child {
+  background: #ffffff !important;
+  border-bottom: 3px solid #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] h2 {
+  color: #000080 !important;
+  font-weight: 900 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] button[aria-label="Close settings"] {
+  background: transparent !important;
+  border: 2px solid #000080 !important;
+  color: #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] button[aria-label="Close settings"]:hover {
+  background: #000080 !important;
+  color: #ffffff !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:nth-child(2) {
+  background: #f0f0f5 !important;
+  border-bottom: 2px solid #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] [role="tab"] {
+  color: #000080 !important;
+  border: 1px solid #000080 !important;
+  font-weight: 700 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] [role="tab"]:hover {
+  background: #e0e0f0 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] [role="tab"][aria-selected="true"] {
+  background: #000080 !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] h3 {
+  color: #000080 !important;
+  font-weight: 900 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] label {
+  border: 2px solid #000080 !important;
+  color: #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] input[type="radio"] {
+  border: 3px solid #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] input[type="radio"]:checked {
+  background: #000080 !important;
+  box-shadow: inset 0 0 0 3px #ffffff !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] label span {
+  color: #000080 !important;
+  font-weight: 700 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:nth-child(3) > div button {
+  background: #ffffff !important;
+  border: 3px solid #000080 !important;
+  color: #000080 !important;
+  font-weight: 700 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:nth-child(3) > div button:hover {
+  background: #000080 !important;
+  color: #ffffff !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:nth-child(3) > div button[aria-pressed="true"] {
+  background: #000080 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 15px rgba(0,0,128,0.4) !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] select {
+  background-color: #ffffff !important;
+  border: 3px solid #000080 !important;
+  color: #000080 !important;
+  font-weight: 700 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23000080' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] select:focus {
+  outline: 4px solid #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] select option {
+  background: #ffffff !important;
+  color: #000080 !important;
+  font-weight: 700 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:last-child button {
+  border: 3px solid #000080 !important;
+  font-weight: 900 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:last-child button:first-child {
+  background: #ffffff !important;
+  color: #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:last-child button:first-child:hover {
+  background: #000080 !important;
+  color: #ffffff !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:last-child button:last-child {
+  background: #000080 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 15px rgba(0,0,128,0.3) !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:last-child button:last-child:hover {
+  background: #00006b !important;
+  box-shadow: 0 0 20px rgba(0,0,128,0.4) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   DEAF MODE SETTINGS PANEL
+   ════════════════════════════════════════════════════════════════ */
+html.deaf-mode [role="dialog"] {
+  border: 3px solid #4a8fff !important;
+}
+
+html.deaf-mode [role="dialog"] > div:first-child {
+  border-bottom: 2px solid #4a8fff !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   LIGHT MODE: TOGGLE SWITCHES & INPUTS
+   ════════════════════════════════════════════════════════════════ */
+:root.theme-light [role="dialog"] [role="switch"] {
+  background: #cbd5e1 !important;
+  border: 1px solid #94a3b8 !important;
+}
+
+:root.theme-light [role="dialog"] [role="switch"]::after {
+  background: #ffffff !important;
+}
+
+:root.theme-light [role="dialog"] [role="switch"][aria-checked="true"] {
+  background: #1e40af !important;
+  border-color: #1e40af !important;
+}
+
+:root.theme-light [role="dialog"] input[type="range"] {
+  background: #e2e8f0 !important;
+  accent-color: #1e40af !important;
+}
+
+:root.theme-light [role="dialog"] > div:nth-child(3) > div p {
+  color: #1e293b !important;
+}
+
+:root.theme-light [role="dialog"] > div:nth-child(3) > div > div > p:first-child {
+  color: #1e293b !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   HIGH CONTRAST MODE: TOGGLE SWITCHES & INPUTS
+   ════════════════════════════════════════════════════════════════ */
+:root.theme-high-contrast [role="dialog"] [role="switch"] {
+  background: #ffffff !important;
+  border: 3px solid #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] [role="switch"]::after {
+  background: #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] [role="switch"][aria-checked="true"] {
+  background: #000000 !important;
+  border: 3px solid #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] [role="switch"][aria-checked="true"]::after {
+  background: #ffffff !important;
+}
+
+:root.theme-high-contrast [role="dialog"] input[type="range"] {
+  background: #000000 !important;
+  accent-color: #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] input[type="range"]::-webkit-slider-thumb {
+  background: #000000 !important;
+  border: 2px solid #ffffff !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:nth-child(3) > div p {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   VISION MODE (DARK): TOGGLE SWITCHES & INPUTS
+   ════════════════════════════════════════════════════════════════ */
+html.vision-mode [role="dialog"] [role="switch"] {
+  background: #0a0a0a !important;
+  border: 3px solid #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] [role="switch"]::after {
+  background: #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] [role="switch"][aria-checked="true"] {
+  background: #ffff00 !important;
+  border: 3px solid #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] [role="switch"][aria-checked="true"]::after {
+  background: #000000 !important;
+}
+
+html.vision-mode [role="dialog"] input[type="range"] {
+  background: #0a0a0a !important;
+  accent-color: #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] input[type="range"]::-webkit-slider-thumb {
+  background: #ffff00 !important;
+  border: 2px solid #000000 !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(3) > div p {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(3) > div > div > p:first-child {
+  color: #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(3) > div > div > p {
+  color: #ffffff !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(3) > div > div span {
+  color: #ffff00 !important;
+  font-weight: 700 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   VISION MODE (LIGHT): TOGGLE SWITCHES & INPUTS
+   ════════════════════════════════════════════════════════════════ */
+:root.theme-light.vision-mode [role="dialog"] [role="switch"] {
+  background: #e6e6f0 !important;
+  border: 3px solid #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] [role="switch"]::after {
+  background: #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] [role="switch"][aria-checked="true"] {
+  background: #000080 !important;
+  border: 3px solid #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] [role="switch"][aria-checked="true"]::after {
+  background: #ffffff !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] input[type="range"] {
+  background: #e6e6f0 !important;
+  accent-color: #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] input[type="range"]::-webkit-slider-thumb {
+  background: #000080 !important;
+  border: 2px solid #ffffff !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:nth-child(3) > div p {
+  color: #000080 !important;
+  font-weight: 700 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:nth-child(3) > div > div > p:first-child {
+  color: #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:nth-child(3) > div > div span {
+  color: #000080 !important;
+  font-weight: 900 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TALKBACK BUTTON STYLING IN ALL MODES
+   ════════════════════════════════════════════════════════════════ */
+.tb-open-btn {
+  width: 100% !important;
+  padding: 12px !important;
+  margin-top: 12px !important;
+  background: rgba(74, 144, 217, 0.15) !important;
+  color: var(--color-primary, #4a90d9) !important;
+  border: 1px solid rgba(74, 144, 217, 0.3) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+
+:root.theme-light .tb-open-btn {
+  background: rgba(30,64,175,0.08) !important;
+  color: #1e40af !important;
+  border: 1px solid rgba(30,64,175,0.2) !important;
+}
+
+:root.theme-high-contrast .tb-open-btn {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  font-weight: 900 !important;
+}
+
+html.vision-mode .tb-open-btn {
+  background: #0a0a0a !important;
+  color: #ffff00 !important;
+  border: 2px solid #ffff00 !important;
+  font-weight: 700 !important;
+}
+
+:root.theme-light.vision-mode .tb-open-btn {
+  background: #ffffff !important;
+  color: #000080 !important;
+  border: 2px solid #000080 !important;
+  font-weight: 700 !important;
+}
+
+/* Privacy section styling in all modes */
+:root.theme-light [role="dialog"] > div:nth-child(3) > div:first-child {
+  background: rgba(30,64,175,0.05) !important;
+  border: 1px solid rgba(30,64,175,0.1) !important;
+}
+
+:root.theme-light [role="dialog"] > div:nth-child(3) > div:first-child p,
+:root.theme-light [role="dialog"] > div:nth-child(3) > div:first-child h3 {
+  color: #1e293b !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:nth-child(3) > div:first-child {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+
+:root.theme-high-contrast [role="dialog"] > div:nth-child(3) > div:first-child p,
+:root.theme-high-contrast [role="dialog"] > div:nth-child(3) > div:first-child h3 {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(3) > div:first-child {
+  background: rgba(255,255,0,0.1) !important;
+  border: 2px solid #ffff00 !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(3) > div:first-child p,
+html.vision-mode [role="dialog"] > div:nth-child(3) > div:first-child h3 {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+html.vision-mode [role="dialog"] > div:nth-child(3) > div:first-child h3 {
+  color: #ffff00 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:nth-child(3) > div:first-child {
+  background: #f0f0ff !important;
+  border: 2px solid #000080 !important;
+}
+
+:root.theme-light.vision-mode [role="dialog"] > div:nth-child(3) > div:first-child p,
+:root.theme-light.vision-mode [role="dialog"] > div:nth-child(3) > div:first-child h3 {
+  color: #000080 !important;
+  font-weight: 700 !important;
 }
 
 /* ── REDUCED MOTION SUPPORT ───────────────── */
