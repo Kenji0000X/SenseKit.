@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react'
 import { X, Monitor, Volume2, Shield } from 'lucide-react'
 import { A11yContext } from '../context/A11yContext'
+import SpeechEngine from '../utils/speechEngine'
 
 /**
  * A11ySettings Component
@@ -17,7 +18,28 @@ export default function A11ySettings({ isOpen, onClose }) {
   const handleReset = () => {
     if (confirm('Reset all settings to defaults?')) {
       resetSettings()
+      SpeechEngine.speak('Settings reset to defaults')
     }
+  }
+
+  const handleClose = () => {
+    onClose()
+    SpeechEngine.speak('Settings saved and closed')
+  }
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab)
+    SpeechEngine.speak(`${tab} settings tab selected`)
+  }
+
+  const handleReducedMotionChange = (checked) => {
+    handleSettingChange('reducedMotion', checked)
+    SpeechEngine.speak(`Reduce motion ${checked ? 'enabled' : 'disabled'}`)
+  }
+
+  const handleFocusVisibleChange = (checked) => {
+    handleSettingChange('focusVisible', checked)
+    SpeechEngine.speak(`Focus indicators ${checked ? 'enabled' : 'disabled'}`)
   }
 
   const tabs = [
@@ -40,7 +62,7 @@ export default function A11ySettings({ isOpen, onClose }) {
           backdropFilter: 'blur(4px)',
           transition: 'opacity 0.2s ease-out',
         }}
-        onClick={onClose}
+        onClick={handleClose}
         aria-hidden="true"
         role="presentation"
       />
@@ -77,7 +99,7 @@ export default function A11ySettings({ isOpen, onClose }) {
           </h2>
           {/* Close Button: 40x40px minimum touch target, WCAG AA compliant */}
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="p-2 rounded transition-colors focus-visible:ring-2 focus-visible:ring-offset-1"
             style={{
               width: '40px',
@@ -90,7 +112,7 @@ export default function A11ySettings({ isOpen, onClose }) {
             }}
             aria-label="Close settings"
             title="Close settings (Escape)"
-            onKeyDown={(e) => e.key === 'Escape' && onClose()}
+            onKeyDown={(e) => e.key === 'Escape' && handleClose()}
           >
             <X className="w-5 h-5" strokeWidth={2} />
           </button>
@@ -104,7 +126,7 @@ export default function A11ySettings({ isOpen, onClose }) {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => handleTabChange(tab.id)}
                 className="flex items-center gap-2 px-3 py-2 rounded-t transition-colors focus-visible:ring-2"
                 style={{
                   backgroundColor: isActive ? 'rgba(74, 144, 217, 0.2)' : 'transparent',
@@ -191,7 +213,10 @@ export default function A11ySettings({ isOpen, onClose }) {
                         name="theme"
                         value={theme.value}
                         checked={settings.theme === theme.value}
-                        onChange={(e) => handleSettingChange('theme', e.target.value)}
+                        onChange={(e) => {
+                          handleSettingChange('theme', e.target.value)
+                          SpeechEngine.speak(`Theme changed to ${theme.label}`)
+                        }}
                         className="sr-only"
                         onFocus={(e) => {
                           e.currentTarget.parentElement.style.outline = '2px solid var(--color-primary, #4a90d9)'
@@ -229,7 +254,11 @@ export default function A11ySettings({ isOpen, onClose }) {
                     return (
                       <button
                         key={size}
-                        onClick={() => handleSettingChange('fontSize', size)}
+                        onClick={() => {
+                          handleSettingChange('fontSize', size)
+                          const sizeLabel = size === 'xs' ? 'Extra Small' : size === 'sm' ? 'Small' : size === 'base' ? 'Medium' : size === 'lg' ? 'Large' : size === 'xl' ? 'Extra Large' : 'Extra Extra Large'
+                          SpeechEngine.speak(`Font size set to ${sizeLabel}`)
+                        }}
                         className="px-2 py-2 rounded text-sm font-medium transition-all focus-visible:ring-2"
                         style={{
                           backgroundColor: isSelected 
@@ -280,7 +309,11 @@ export default function A11ySettings({ isOpen, onClose }) {
                 </h3>
                 <select
                   value={settings.contrast}
-                  onChange={(e) => handleSettingChange('contrast', e.target.value)}
+                  onChange={(e) => {
+                    handleSettingChange('contrast', e.target.value)
+                    const contrastLabel = e.target.value === 'normal' ? 'Normal' : e.target.value === 'high' ? 'High, WCAG AA' : 'Ultra, WCAG AAA'
+                    SpeechEngine.speak(`Contrast set to ${contrastLabel}`)
+                  }}
                   className="w-full px-3 py-2 rounded text-sm font-medium focus-visible:ring-2 transition-colors"
                   style={{
                     backgroundColor: 'var(--color-bg-input, #2d3348)',
@@ -313,7 +346,10 @@ export default function A11ySettings({ isOpen, onClose }) {
                     return (
                       <button
                         key={spacing}
-                        onClick={() => handleSettingChange('textSpacing', spacing)}
+                        onClick={() => {
+                          handleSettingChange('textSpacing', spacing)
+                          SpeechEngine.speak(`Text spacing set to ${spacing === 'normal' ? 'Normal' : 'Wide'}`)
+                        }}
                         className="flex-1 px-4 py-2 rounded font-medium transition-all focus-visible:ring-2"
                         style={{
                           backgroundColor: isSelected
@@ -352,13 +388,13 @@ export default function A11ySettings({ isOpen, onClose }) {
                   label="Reduce Motion"
                   description="Minimize animations"
                   checked={settings.reducedMotion}
-                  onChange={(checked) => handleSettingChange('reducedMotion', checked)}
+                  onChange={handleReducedMotionChange}
                 />
                 <ToggleRow
                   label="Focus Visible"
                   description="Show focus indicators"
                   checked={settings.focusVisible}
-                  onChange={(checked) => handleSettingChange('focusVisible', checked)}
+                  onChange={handleFocusVisibleChange}
                 />
               </div>
             </div>
@@ -498,7 +534,7 @@ export default function A11ySettings({ isOpen, onClose }) {
 
           {/* Done Button */}
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="flex-1 px-4 py-2 text-sm font-medium rounded font-bold transition-all focus-visible:ring-2"
             style={{
               backgroundColor: 'var(--color-primary, #4a90d9)',

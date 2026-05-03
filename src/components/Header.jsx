@@ -1,5 +1,6 @@
 import { Settings } from 'lucide-react'
 import { useState } from 'react'
+import SpeechEngine from '../utils/speechEngine'
 
 /**
  * Header Component - SenseKit Design
@@ -11,10 +12,17 @@ export default function Header({ onOpenSettings }) {
 
   const toggleVisionMode = () => {
     setVisionMode(!visionMode)
+    SpeechEngine.speak(`Vision mode ${!visionMode ? 'enabled' : 'disabled'}`)
   }
 
   const toggleDeafMode = () => {
     setDeafMode(!deafMode)
+    SpeechEngine.speak(`Deaf mode ${!deafMode ? 'enabled' : 'disabled'}`)
+  }
+
+  const handleOpenSettings = () => {
+    onOpenSettings()
+    SpeechEngine.speak('Settings panel opened')
   }
 
   return (
@@ -150,7 +158,7 @@ export default function Header({ onOpenSettings }) {
 
         {/* Settings Button */}
         <button
-          onClick={onOpenSettings}
+          onClick={handleOpenSettings}
           className="group relative transition-all"
           aria-label="Open settings"
           style={{

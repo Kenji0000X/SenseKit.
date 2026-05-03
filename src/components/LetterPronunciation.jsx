@@ -2,6 +2,7 @@ import { useState, useRef, useContext } from 'react'
 
 import { speakCharacter, stopSpeech } from '../utils/enhancedSpeechHelper'
 import { A11yContext } from '../context/A11yContext'
+import SpeechEngine from '../utils/speechEngine'
 
 
 /**
@@ -49,11 +50,15 @@ export default function LetterPronunciation({ label = 'Type here for letter pron
     stopSpeech()
     setText('')
     setLastChar('')
+    SpeechEngine.speak('Text cleared')
     textareaRef.current?.focus()
   }
 
   const handleSpeak = () => {
     if (text) {
+      SpeechEngine.speak(text, {
+        rate: settings.speechRate,
+      })
       speakCharacter(text, {
         rate: settings.speechRate,
         enableVibration: settings.enableVibration,
@@ -110,6 +115,7 @@ export default function LetterPronunciation({ label = 'Type here for letter pron
           onFocus={(e) => {
             e.currentTarget.style.borderColor = '#4a90d9'
             e.currentTarget.style.boxShadow = '0 0 0 3px rgba(74,144,217,0.25)'
+            SpeechEngine.speak('Voice input box. Type or press the mic to speak.')
           }}
           onBlur={(e) => {
             e.currentTarget.style.borderColor = '#3d4f6e'
@@ -189,7 +195,10 @@ export default function LetterPronunciation({ label = 'Type here for letter pron
         {/* Stop */}
         <button
           className="action-btn btn-stop"
-          onClick={stopSpeech}
+          onClick={() => {
+            stopSpeech()
+            SpeechEngine.speak('Stopped')
+          }}
           aria-label="Stop speaking"
         >
           <svg width="16" height="16" viewBox="0 0 24 24"

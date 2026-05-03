@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { A11yProvider } from './context/A11yContext'
 import Header from './components/Header'
 import LetterPronunciation from './components/LetterPronunciation'
 import A11ySettings from './components/A11ySettings'
 import FeedbackWidget from './components/FeedbackWidget'
+import SpeechEngine from './utils/speechEngine'
+import { useSpeechCallback } from './hooks/useSpeechCallback'
+import { useVolumeKey } from './hooks/useVolumeKey'
 import './App.css'
 import './components/FeedbackWidget.css'
 
@@ -16,43 +19,41 @@ export default function App() {
   const [speakingCard, setSpeakingCard] = useState(null)
 
   /**
-   * Speak card content using Web Speech API
-   * Provides audio description of feature cards for accessibility
+   * Speak card content using new SpeechEngine
+   * Preserves existing speakingCard state management
    */
-  const speakCardContent = (cardId, title, description) => {
-    // Cancel any ongoing speech first
-    window.speechSynthesis.cancel()
-    setSpeakingCard(cardId)
+  const speakCardContent = useCallback((cardId, title, description) => {
+    setSpeakingCard(cardId);
+    SpeechEngine.speak(
+      `${title}. ${description}`,
+      {
+        rate: 0.9,
+        onEnd: () => setSpeakingCard(null),
+        onError: () => setSpeakingCard(null),
+      }
+    );
+  }, []);
 
-    const utterance = new SpeechSynthesisUtterance(
-      `${title}. ${description}`
-    )
+  // Preload voices + welcome speech
+  useEffect(() => {
+    SpeechEngine.preload();
 
-    // Settings for accessibility
-    utterance.rate = 0.92   // slightly slower for clarity
-    utterance.pitch = 1
-    utterance.volume = 1
+    // Greet user on page load after short delay
+    const timer = setTimeout(() => {
+      SpeechEngine.speak(
+        'Welcome to SenseKit. ' +
+        'An accessibility toolkit for Deaf, ' +
+        'Hard of Hearing, Blind, and Low Vision users. ' +
+        'Press Volume Up to hear feature cards. ' +
+        'Click any card to hear its description.',
+        { rate: 0.85 }
+      );
+    }, 1500);
 
-    // Use the first available natural voice, fallback to default
-    const voices = window.speechSynthesis.getVoices()
-    const preferred = voices.find(v =>
-      v.lang.startsWith('en') && v.localService
-    )
-    if (preferred) utterance.voice = preferred
+    return () => clearTimeout(timer);
+  }, []);
 
-    // Clear active state when done speaking
-    utterance.onend = () => setSpeakingCard(null)
-    utterance.onerror = () => setSpeakingCard(null)
-
-    window.speechSynthesis.speak(utterance)
-  }
-
-  // Preload voices async
-  if (typeof window !== 'undefined') {
-    window.speechSynthesis.onvoiceschanged = () => {
-      window.speechSynthesis.getVoices()
-    }
-  }
+  const { speak: speakCallback } = useSpeechCallback();
 
   // SenseKit Features: 3 for Deaf/HoH, 3 for Blind/Low Vision
   const features = [
@@ -101,6 +102,17 @@ export default function App() {
       accentColor: '#4a90d9',
     },
   ]
+
+  // Volume key navigation
+  useVolumeKey({
+    cards: features,
+    pageTitle: 'SenseKit. Empowering Accessibility for Everyone.',
+    elements: [
+      'Settings panel. Press to open accessibility settings.',
+      'Vision mode toggle. Press to switch visual display.',
+      'Deaf mode toggle. Press to switch audio mode.',
+    ],
+  });
 
   return (
     <A11yProvider>
