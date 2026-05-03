@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 import { X, Monitor, Volume2, Shield } from 'lucide-react'
 import { A11yContext } from '../context/A11yContext'
 import SpeechEngine from '../utils/speechEngine'
+import TalkBackSettings from './TalkBackSettings'
 
 /**
  * A11ySettings Component
@@ -10,6 +11,7 @@ import SpeechEngine from '../utils/speechEngine'
 export default function A11ySettings({ isOpen, onClose }) {
   const { settings, updateSetting, resetSettings } = useContext(A11yContext)
   const [activeTab, setActiveTab] = useState('display')
+  const [tbOpen, setTbOpen] = useState(false)
 
   const handleSettingChange = (key, value) => {
     updateSetting(key, value)
@@ -52,6 +54,10 @@ export default function A11ySettings({ isOpen, onClose }) {
 
   return (
     <>
+      <TalkBackSettings
+        isOpen={tbOpen}
+        onClose={() => setTbOpen(false)}
+      />
       {/* WCAG AA Compliant Backdrop/Scrim: Semi-transparent dark background */}
       <div
         style={{ 
@@ -65,7 +71,7 @@ export default function A11ySettings({ isOpen, onClose }) {
         onClick={handleClose}
         aria-hidden="true"
         role="presentation"
-      />
+      /> 
 
       {/* Settings Panel Container: WCAG AA compliant dark theme */}
       <div
@@ -473,6 +479,35 @@ export default function A11ySettings({ isOpen, onClose }) {
                   checked={settings.enableLetterPronunciation}
                   onChange={(checked) => handleSettingChange('enableLetterPronunciation', checked)}
                 />
+                <button
+                  className="tb-open-btn"
+                  onClick={() => {
+                    setTbOpen(true);
+                    SpeechEngine.speak('Opening TalkBack audio settings');
+                  }}
+                  aria-label="Open TalkBack audio settings"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    marginTop: '12px',
+                    backgroundColor: 'rgba(74, 144, 217, 0.15)',
+                    color: 'var(--color-primary, #4a90d9)',
+                    border: '1px solid rgba(74, 144, 217, 0.3)',
+                    borderRadius: '8px',
+                    fontWeight: '600',
+                    fontSize: '0.9rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(74, 144, 217, 0.25)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(74, 144, 217, 0.15)';
+                  }}
+                >
+                  🔊 TalkBack Audio Settings
+                </button>
               </div>
             </div>
           )}

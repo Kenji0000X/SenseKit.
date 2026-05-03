@@ -4,10 +4,13 @@ import './index.css'
 import './styles/sensekit.css'
 import './styles/settings.css'
 import './styles/components.css'
+import { AccessibilityProvider } from './context/AccessibilityContext.jsx'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <AccessibilityProvider>
+      <App />
+    </AccessibilityProvider>
   </StrictMode>,
 )

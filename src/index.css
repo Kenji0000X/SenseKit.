@@ -1,402 +1,463 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  /* Typography */
-  --sans: 'Atkinson Hyperlegible', system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: 'Atkinson Hyperlegible', system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, 'Courier New', monospace;
-
-  /* Default font sizes */
-  --font-size: 1rem;
-  --line-height: 1.6;
-  --letter-spacing: 0.02em;
-
-  /* WCAG AA Color System */
-  --color-primary: #4a90d9;
-  --color-primary-hover: #357abd;
-  --color-bg-panel: #1a1f2e;
-  --color-bg-card: #1a2035;
-  --color-text-primary: #e2e8f0;
-  --color-text-secondary: #a0b0c8;
-  --color-text-label: #c8d0e0;
-  --color-text-muted: #8a9ab5;
-  --color-border: #2d3a52;
-  --color-border-subtle: #4a5568;
-  --color-danger: #fc8181;
-  --color-danger-hover: #f56565;
-  --color-bg-input: #2d3348;
-  --color-bg-hover: #374060;
-  --color-button-inactive: #3d4563;
-
-  /* Default colors (light theme) */
-  --text: #1f2937;
-  --text-h: #111827;
-  --bg: #ffffff;
-  --border: #e5e7eb;
-  --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px;
+/* ── MODE BUTTONS BASE ────────────────────── */
+.mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
 }
 
-/* Light Theme (Default) */
-[data-theme='light'] {
-  --text: #1f2937;
-  --text-h: #111827;
-  --bg: #ffffff;
-  --border: #e5e7eb;
-  color-scheme: light;
+.mode-btn:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.18);
+  transform: translateY(-1px);
 }
 
-/* Dark Theme */
-[data-theme='dark'] {
-  --text: #f3f4f6;
-  --text-h: #f9fafb;
-  --bg: #111827;
-  --border: #374151;
-  color-scheme: dark;
+.mode-btn:focus-visible {
+  outline: 2px solid #4a8fff;
+  outline-offset: 3px;
 }
 
-/* High Contrast Light Theme */
-[data-theme='high-contrast'] {
-  --text: #000000;
-  --text-h: #000000;
-  --bg: #ffffff;
-  --border: #000000;
-  color-scheme: light;
+/* Icon */
+.mode-btn__icon {
+  font-size: 1rem;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
-/* ── NEW THEME SYSTEM — CLASS-BASED ────────── */
-
-/* DEFAULT: DARK THEME */
-:root,
-.theme-dark {
-  --bg:           #0a0e1a;
-  --bg-panel:     #0f1624;
-  --bg-card:      #131d2e;
-  --bg-input:     #080d18;
-  --bg-elevated:  #1a2235;
-  --text-1:       #f0f4ff;
-  --text-2:       #c8d6ee;
-  --text-3:       #7a8faa;
-  --border:       rgba(255,255,255,0.07);
-  --primary:      #4a8fff;
+/* Label text */
+.mode-btn__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #7a8faa;
+  transition: color 0.2s;
 }
 
-/* LIGHT THEME */
-.theme-light {
-  --bg:           #f4f6fb;
-  --bg-panel:     #ffffff;
-  --bg-card:      #f0f4ff;
-  --bg-input:     #ffffff;
-  --bg-elevated:  #e8edf8;
-  --text-1:       #0d1117;
-  --text-2:       #1e2a3a;
-  --text-3:       #4a5568;
-  --border:       rgba(0,0,0,0.1);
-  --primary:      #2563eb;
+/* ON/OFF status pill */
+.mode-btn__status {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.06);
+  color: #4a5c75;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.2s;
 }
 
-/* HIGH CONTRAST THEME */
-.theme-high-contrast {
-  --bg:           #000000;
-  --bg-panel:     #0a0a0a;
-  --bg-card:      #111111;
-  --bg-input:     #000000;
-  --bg-elevated:  #1a1a1a;
-  --text-1:       #ffffff;
-  --text-2:       #ffffff;
-  --text-3:       #ffff00;
-  --border:       rgba(255,255,255,0.3);
-  --primary:      #00cfff;
+/* ── VISION MODE ACTIVE STATE ─────────────── */
+.mode-btn--active {
+  background: rgba(74,143,255,0.15) !important;
+  border-color: rgba(74,143,255,0.45) !important;
+  box-shadow: 
+    0 0 0 1px rgba(74,143,255,0.2),
+    0 4px 16px rgba(74,143,255,0.2) !important;
 }
 
-/* ── APPLY VARIABLES TO ALL ELEMENTS ─────── */
-
-body {
-  background-color: var(--bg, #0a0e1a) !important;
-  color: var(--text-2, #c8d6ee) !important;
-  transition: background-color 0.25s ease, color 0.2s ease;
+.mode-btn--active .mode-btn__label {
+  color: #4a8fff !important;
+  font-weight: 700 !important;
 }
 
-/* Navbar */
-header, nav, [class*="navbar"] {
-  background: var(--bg-panel, #0f1624) !important;
-  border-color: var(--border, rgba(255,255,255,0.07)) !important;
+.mode-btn--active .mode-btn__status {
+  background: #4a8fff !important;
+  color: #ffffff !important;
+  border-color: #4a8fff !important;
+  box-shadow: 0 2px 8px rgba(74,143,255,0.4) !important;
 }
 
-/* Cards */
-[class*="card"],
-[class*="feature"] {
-  background: var(--bg-card, #131d2e) !important;
-  border-color: var(--border, rgba(255,255,255,0.07)) !important;
-  color: var(--text-2, #c8d6ee) !important;
+/* Pulse ring when active */
+.mode-btn--active::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 12px;
+  border: 2px solid rgba(74,143,255,0.3);
+  animation: mode-ring 2s ease infinite;
+  pointer-events: none;
 }
 
-/* Card titles */
-[class*="card"] h3,
-[class*="card"] strong,
-[class*="feature"] h3 {
-  color: var(--text-1, #f0f4ff) !important;
+@keyframes mode-ring {
+  0%,100% { opacity: 0.6; transform: scale(1); }
+  50%     { opacity: 0;   transform: scale(1.04); }
 }
 
-/* Card descriptions */
-[class*="card"] p,
-[class*="feature"] p {
-  color: var(--text-3, #7a8faa) !important;
+/* ── DEAF MODE ACTIVE STATE ───────────────── */
+.mode-btn--deaf {
+  background: rgba(245,158,11,0.12) !important;
+  border-color: rgba(245,158,11,0.4) !important;
+  box-shadow: 
+    0 0 0 1px rgba(245,158,11,0.15),
+    0 4px 16px rgba(245,158,11,0.15) !important;
 }
 
-/* Input panels */
-[class*="panel"],
-[class*="input"],
-[class*="voice"] {
-  background: var(--bg-panel, #0f1624) !important;
-  border-color: var(--border, rgba(255,255,255,0.07)) !important;
+.mode-btn--deaf .mode-btn__label {
+  color: #f59e0b !important;
+  font-weight: 700 !important;
 }
 
-/* Textarea */
-textarea {
-  background: var(--bg-input, #080d18) !important;
-  background-color: var(--bg-input, #080d18) !important;
-  color: var(--text-1, #f0f4ff) !important;
-  border-color: var(--border, rgba(255,255,255,0.07)) !important;
+.mode-btn--deaf .mode-btn__status {
+  background: #f59e0b !important;
+  color: #000000 !important;
+  border-color: #f59e0b !important;
+  box-shadow: 0 2px 8px rgba(245,158,11,0.35) !important;
 }
 
-/* Settings panel */
-[class*="settings"] {
-  background: var(--bg-panel, #0f1624) !important;
-  border-color: var(--border, rgba(255,255,255,0.07)) !important;
-  color: var(--text-2, #c8d6ee) !important;
+.mode-btn--deaf::before {
+  border-color: rgba(245,158,11,0.3) !important;
 }
 
-/* Footer */
-footer, [class*="footer"] {
-  background: var(--bg-panel, #0f1624) !important;
-  border-color: var(--border, rgba(255,255,255,0.07)) !important;
-}
-
-/* Smooth transition for theme changes */
-*, *::before, *::after {
-  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
-}
-
-/* High contrast — thicker borders */
-.theme-high-contrast [class*="card"],
-.theme-high-contrast textarea,
-.theme-high-contrast [class*="panel"] {
-  border-width: 2px !important;
-  border-style: solid !important;
-}
-
-/* Light theme — softer shadows */
-.theme-light [class*="card"] {
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
-}
-
-/* Reduced motion — skip transitions */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    transition: none !important;
+/* ── MOBILE: compact buttons ──────────────── */
+@media (max-width: 600px) {
+  .mode-btn {
+    min-height: 38px;
+    padding: 7px 10px;
+    gap: 4px;
+  }
+  .mode-btn__label {
+    display: none; /* icon + status only on mobile */
+  }
+  .mode-btn__status {
+    font-size: 0.55rem;
+    padding: 1px 5px;
   }
 }
 
-/* Normal font size */
-[data-font-size='xs'] {
-  --font-size: 0.75rem;
+/* ── VISION MODE: Global overrides ───────── */
+
+/* Large text */
+html.vision-mode {
+  font-size: 115%;
 }
 
-[data-font-size='sm'] {
-  --font-size: 0.875rem;
+html.vision-mode body {
+  background: #000000 !important;
+  color: #ffffff !important;
+  line-height: 1.8 !important;
+  letter-spacing: 0.01em !important;
 }
 
-[data-font-size='base'] {
-  --font-size: 1rem;
+/* ── NAVBAR ───────────────────────────────── */
+html.vision-mode header,
+html.vision-mode nav,
+html.vision-mode [class*="navbar"] {
+  background: #000000 !important;
+  border-bottom: 3px solid #4a8fff !important;
+  box-shadow: 0 2px 20px rgba(74,143,255,0.25) !important;
 }
 
-[data-font-size='lg'] {
-  --font-size: 1.125rem;
+/* Brand text */
+html.vision-mode [class*="brand-name"],
+html.vision-mode [class*="app-title"] {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  font-size: 1.3rem !important;
 }
 
-[data-font-size='xl'] {
-  --font-size: 1.25rem;
+/* Tagline */
+html.vision-mode [class*="tagline"],
+html.vision-mode [class*="subtitle-brand"] {
+  color: #c0c0c0 !important;
+  font-size: 0.85rem !important;
 }
 
-[data-font-size='2xl'] {
-  --font-size: 1.5rem;
+/* All nav/icon buttons */
+html.vision-mode .nav-btn,
+html.vision-mode header button:not(.mode-btn) {
+  background: #111111 !important;
+  border: 2px solid rgba(255,255,255,0.3) !important;
+  color: #ffffff !important;
+  min-height: 52px !important;
+  min-width: 52px !important;
 }
 
-/* Text spacing */
-[data-text-spacing='normal'] {
-  --letter-spacing: 0.02em;
-  --line-height: 1.6;
+html.vision-mode .nav-btn:hover {
+  background: #1a1a1a !important;
+  border-color: #4a8fff !important;
 }
 
-[data-text-spacing='wide'] {
-  --letter-spacing: 0.08em;
-  --line-height: 1.8;
+/* ── HERO SECTION ─────────────────────────── */
+html.vision-mode [class*="hero"],
+html.vision-mode section:first-of-type {
+  background: #000000 !important;
 }
 
-/* Reduced motion */
-[data-reduce-motion='true'] * {
+html.vision-mode [class*="hero"] h1,
+html.vision-mode [class*="hero-title"],
+html.vision-mode [class*="main-heading"] {
+  color: #ffffff !important;
+  font-size: clamp(2rem, 5vw, 3.2rem) !important;
+  text-shadow: 0 0 30px rgba(74,143,255,0.3) !important;
+}
+
+html.vision-mode [class*="hero"] p,
+html.vision-mode [class*="hero-sub"] {
+  color: #d0d0d0 !important;
+  font-size: 1.1rem !important;
+  max-width: 600px !important;
+}
+
+/* CTA buttons in hero */
+html.vision-mode [class*="hero"] button,
+html.vision-mode [class*="cta"],
+html.vision-mode [class*="try-voice"] {
+  min-height: 56px !important;
+  padding: 14px 32px !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  border-width: 2px !important;
+}
+
+/* ── SECTION HEADINGS ─────────────────────── */
+html.vision-mode h2,
+html.vision-mode [class*="section-title"] {
+  color: #ffffff !important;
+  font-size: 1.8rem !important;
+}
+
+html.vision-mode [class*="section-sub"],
+html.vision-mode section > p {
+  color: #b0b0b0 !important;
+  font-size: 1rem !important;
+}
+
+/* ── FEATURE CARDS ────────────────────────── */
+html.vision-mode [class*="feature-card"],
+html.vision-mode [class*="card-item"] {
+  background: #111111 !important;
+  border: 2px solid rgba(74,143,255,0.5) !important;
+  box-shadow: 0 4px 20px rgba(74,143,255,0.1) !important;
+}
+
+html.vision-mode [class*="feature-card"]:hover {
+  border-color: #4a8fff !important;
+  box-shadow: 0 0 0 3px rgba(74,143,255,0.2),
+              0 8px 28px rgba(74,143,255,0.2) !important;
+}
+
+html.vision-mode [class*="card-title"],
+html.vision-mode [class*="feature-card"] h3,
+html.vision-mode [class*="feature-card"] strong {
+  color: #ffffff !important;
+  font-size: 1.05rem !important;
+}
+
+html.vision-mode [class*="card-desc"],
+html.vision-mode [class*="feature-card"] p {
+  color: #c8c8c8 !important;
+  font-size: 0.9rem !important;
+  line-height: 1.7 !important;
+}
+
+/* Card icons */
+html.vision-mode [class*="card-icon"] {
+  border: 2px solid rgba(74,143,255,0.4) !important;
+  background: rgba(74,143,255,0.12) !important;
+}
+
+/* ── VOICE INPUT SECTION ──────────────────── */
+html.vision-mode [class*="input-panel"],
+html.vision-mode [class*="voice-container"],
+html.vision-mode [class*="voice-panel"] {
+  background: #111111 !important;
+  border: 2px solid rgba(74,143,255,0.4) !important;
+}
+
+html.vision-mode textarea {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 3px solid rgba(255,255,255,0.3) !important;
+  border-radius: 12px !important;
+  font-size: 1.05rem !important;
+  caret-color: #4a8fff !important;
+}
+
+html.vision-mode textarea:focus {
+  border-color: #4a8fff !important;
+  box-shadow: 0 0 0 4px rgba(74,143,255,0.2) !important;
+}
+
+html.vision-mode textarea::placeholder {
+  color: #666666 !important;
+}
+
+/* Action buttons */
+html.vision-mode [class*="action-row"] button,
+html.vision-mode [class*="btn-speak"],
+html.vision-mode [class*="btn-clear"],
+html.vision-mode [class*="btn-stop"] {
+  min-height: 50px !important;
+  font-size: 0.95rem !important;
+  border-width: 2px !important;
+  font-weight: 700 !important;
+}
+
+/* ── SETTINGS PANEL ───────────────────────── */
+html.vision-mode [class*="settings-panel"],
+html.vision-mode [class*="settings-modal"] {
+  background: #0a0a0a !important;
+  border: 2px solid rgba(255,255,255,0.2) !important;
+}
+
+html.vision-mode [class*="settings-title"] {
+  color: #ffffff !important;
+  font-size: 1.15rem !important;
+}
+
+html.vision-mode [class*="settings-label"],
+html.vision-mode [class*="group-label"],
+html.vision-mode [class*="section-label"] {
+  color: #888888 !important;
+  font-size: 0.75rem !important;
+}
+
+html.vision-mode [class*="toggle-label"],
+html.vision-mode [class*="setting-label"] {
+  color: #ffffff !important;
+  font-size: 0.95rem !important;
+}
+
+html.vision-mode [class*="toggle-desc"],
+html.vision-mode [class*="setting-desc"] {
+  color: #888888 !important;
+  font-size: 0.8rem !important;
+}
+
+html.vision-mode select {
+  background: #111111 !important;
+  border: 2px solid rgba(255,255,255,0.2) !important;
+  color: #ffffff !important;
+}
+
+html.vision-mode [class*="font-size-row"] button,
+html.vision-mode [class*="size-btn"] {
+  background: #111111 !important;
+  border: 2px solid rgba(255,255,255,0.15) !important;
+  color: #c0c0c0 !important;
+  min-height: 40px !important;
+}
+
+html.vision-mode [class*="font-size-row"] button.active,
+html.vision-mode [class*="font-btn"].active {
+  background: #4a8fff !important;
+  border-color: #4a8fff !important;
+  color: #ffffff !important;
+}
+
+/* ── FOOTER ───────────────────────────────── */
+html.vision-mode footer,
+html.vision-mode [class*="footer"] {
+  background: #000000 !important;
+  border-top: 2px solid rgba(74,143,255,0.3) !important;
+  color: #888888 !important;
+}
+
+/* ── UNIVERSAL: ALL INTERACTIVE ELEMENTS ──── */
+html.vision-mode button,
+html.vision-mode [role="button"],
+html.vision-mode input,
+html.vision-mode select,
+html.vision-mode textarea {
+  min-height: 48px !important;
+}
+
+/* ── FOCUS RING ───────────────────────────── */
+html.vision-mode *:focus-visible {
+  outline: 4px solid #ffff00 !important;
+  outline-offset: 4px !important;
+  border-radius: 4px !important;
+}
+
+/* ── NO ANIMATIONS ────────────────────────── */
+html.vision-mode *,
+html.vision-mode *::before,
+html.vision-mode *::after {
   animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
+  transition-duration: 0.15s !important;
+  transition-property: 
+    background-color, 
+    border-color, 
+    color,
+    outline !important;
 }
 
-html {
-  font-family: var(--sans);
-  font-size: var(--font-size);
-  line-height: var(--line-height);
-  letter-spacing: var(--letter-spacing);
-  background-color: var(--bg);
-  color: var(--text);
+/* Exception: keep focus transitions */
+html.vision-mode *:focus-visible {
+  transition: outline 0.1s !important;
 }
 
+/* ── SMOOTH TRANSITION INTO VISION MODE ────── */
 body {
-  background-color: var(--bg);
-  color: var(--text);
-  transition: background-color 0.3s, color 0.3s;
+  transition: 
+    background-color 0.3s ease,
+    color 0.3s ease !important;
 }
 
-/* High contrast mode specific styles */
-[data-theme='high-contrast'] {
-  background-color: #ffffff;
-  color: #000000;
+/* ── VISION MODE INDICATOR BAR ─────────────── */
+/* Thin colored bar at very top of page */
+html.vision-mode body::before {
+  content: '👁️  Vision Mode Active — High Contrast';
+  display: block;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: #4a8fff;
+  color: #ffffff;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 5px 16px;
+  letter-spacing: 0.05em;
+  pointer-events: none;
 }
 
-[data-theme='high-contrast'] button {
-  border: 3px solid #000000;
+/* Push navbar down when banner shows */
+html.vision-mode header,
+html.vision-mode nav {
+  top: 28px !important;
 }
 
-[data-theme='high-contrast'] input,
-[data-theme='high-contrast'] textarea,
-[data-theme='high-contrast'] select {
-  border: 3px solid #000000 !important;
-  color: #000000 !important;
-  background-color: #ffffff !important;
+@media (max-width: 600px) {
+  html.vision-mode body::before {
+    font-size: 0.65rem;
+    padding: 4px 12px;
+  }
 }
 
-[data-theme='high-contrast'] a {
-  text-decoration: underline;
-  color: #0066cc;
-}
-
-/* Focus styles for all interactive elements - Modern Cyan Neon Rings */
-:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 4px #06b6d4, 0 0 0 6px #070b14;
-}
-
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible,
-[tabindex]:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 4px #06b6d4, 0 0 0 6px #070b14;
-}
-
-/* Ensure text is readable even with high contrast */
-[data-contrast='high'] {
-  --text: #000000;
-  --text-h: #000000;
-  --bg: #ffffff;
-}
-
-[data-contrast='ultra'] {
-  --text: #000000;
-  --text-h: #000000;
-  --bg: #ffffff;
-}
-
-/* Screen reader only text */
+/* ── SR ONLY utility ───────────────────────── */
 .sr-only {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+  clip: rect(0,0,0,0);
+  border: 0;
 }
 
-.sr-only:not(:focus-visible) {
-  display: none;
-}
-
-/* Skip links visible on focus */
-.focus\:not-sr-only:focus-visible {
-  position: static;
-  width: auto;
-  height: auto;
-  padding: 1rem;
-  margin: 0;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
-  display: block;
-}
-
-/* Additional improvements */
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font-family: inherit;
-  font-size: inherit;
-  cursor: pointer;
-}
-
-input,
-textarea,
-select {
-  font-family: inherit;
-  font-size: inherit;
-}
-
-/* Dark scrollbar for dark theme */
-[data-theme='dark'] ::-webkit-scrollbar,
-[data-theme='high-contrast'] ::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-
-[data-theme='dark'] ::-webkit-scrollbar-track,
-[data-theme='high-contrast'] ::-webkit-scrollbar-track {
-  background: #1a1a1a;
-}
-
-[data-theme='dark'] ::-webkit-scrollbar-thumb,
-[data-theme='high-contrast'] ::-webkit-scrollbar-thumb {
-  background: #4a4a4a;
-  border-radius: 6px;
-}
-
-[data-theme='dark'] ::-webkit-scrollbar-thumb:hover,
-[data-theme='high-contrast'] ::-webkit-scrollbar-thumb:hover {
-  background: #5a5a5a;
-}
-
-/* Smooth transitions */
-* {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  :root {
-    --font-size: 0.95rem;
+/* ── Mobile: caption bar higher up ─────────── */
+@media (max-width: 600px) {
+  #visual-caption {
+    bottom: 100px;
+    font-size: 0.85rem;
+    padding: 10px 16px;
   }
 }
 
+/* ── Reduced motion: skip flash ────────────── */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  #visual-flash.flash-active {
+    animation: none;
+    opacity: 0;
   }
 }

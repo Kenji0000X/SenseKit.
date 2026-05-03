@@ -1,45 +1,32 @@
-import { Settings } from 'lucide-react'
-import { useState } from 'react'
-import SpeechEngine from '../utils/speechEngine'
+import { useAccessibility } from '../context/AccessibilityContext.jsx'
 
 /**
  * Header Component - SenseKit Design
  * WCAG AA accessible navbar with Vision/Deaf toggles
  */
 export default function Header({ onOpenSettings }) {
-  const [visionMode, setVisionMode] = useState(false)
-  const [deafMode, setDeafMode] = useState(false)
-
-  const toggleVisionMode = () => {
-    setVisionMode(!visionMode)
-    SpeechEngine.speak(`Vision mode ${!visionMode ? 'enabled' : 'disabled'}`)
-  }
-
-  const toggleDeafMode = () => {
-    setDeafMode(!deafMode)
-    SpeechEngine.speak(`Deaf mode ${!deafMode ? 'enabled' : 'disabled'}`)
-  }
+  const { visionMode, deafMode, toggleVisionMode, toggleDeafMode, safeSpeech } = useAccessibility()
 
   const handleOpenSettings = () => {
     onOpenSettings()
-    SpeechEngine.speak('Settings panel opened')
+    safeSpeech('Settings panel opened')
   }
 
   return (
-    <header 
-      className="fixed top-0 left-0 right-0 z-30"
-      style={{
-        height: '64px',
-        background: '#0d1117',
-        borderBottom: '1px solid #1e2a3a',
-        boxShadow: '0 2px 12px rgba(0,0,0,0.4)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingLeft: '32px',
-        paddingRight: '32px',
-      }}
-    >
+      <header 
+        className="fixed top-0 left-0 right-0 z-30"
+        style={{
+          height: '96px',
+          background: '#0d1117',
+          borderBottom: '1px solid #1e2a3a',
+          boxShadow: '0 2px 12px rgba(0,0,0,0.4)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingLeft: '20px',
+          paddingRight: '20px',
+        }}
+      >
       {/* Logo & Brand */}
       <a 
         href="#" 
@@ -105,6 +92,7 @@ export default function Header({ onOpenSettings }) {
             if (!visionMode) e.currentTarget.style.background = '#141c2e'
             if (!visionMode) e.currentTarget.style.color = '#a0b4cc'
           }}
+          className={`nav-btn ${visionMode ? 'mode-active' : ''}`}
           onFocus={(e) => {
             e.currentTarget.style.outline = '3px solid #4a90d9'
             e.currentTarget.style.outlineOffset = '2px'
@@ -145,6 +133,7 @@ export default function Header({ onOpenSettings }) {
             if (!deafMode) e.currentTarget.style.background = '#141c2e'
             if (!deafMode) e.currentTarget.style.color = '#a0b4cc'
           }}
+          className={`nav-btn ${deafMode ? 'mode-active-deaf' : ''}`}
           onFocus={(e) => {
             e.currentTarget.style.outline = '3px solid #4a90d9'
             e.currentTarget.style.outlineOffset = '2px'
@@ -194,9 +183,10 @@ export default function Header({ onOpenSettings }) {
             e.currentTarget.style.outline = 'none'
           }}
         >
-          <Settings className="w-5 h-5" strokeWidth={2} />
+          ⚙️
         </button>
       </div>
     </header>
   )
 }
+

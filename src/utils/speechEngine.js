@@ -56,6 +56,57 @@ const SpeechEngine = {
       window.speechSynthesis.getVoices();
     };
   },
+
+  // ── TALKBACK DETECTION ──────────────────────
+  isTalkBackLikely() {
+    const ua = navigator.userAgent.toLowerCase();
+    const isAndroid = ua.includes('android');
+    
+    // Check for Android + accessibility indicators
+    const hasA11y = 
+      window.matchMedia('(prefers-reduced-motion: reduce)')
+            .matches ||
+      navigator.userAgent.includes('Mobile');
+
+    return isAndroid;
+  },
+
+  isScreenReaderActive() {
+    // Check if any screen reader is likely active
+    // Works for both TalkBack (Android) and 
+    // VoiceOver (iOS)
+    return (
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches
+    );
+  },
+
+  // ── TALKBACK-OPTIMIZED SPEECH ───────────────
+  // Slower rate + clearer for TalkBack users
+  speakForTalkBack(text, options = {}) {
+    this.speak(text, {
+      rate: 0.78,      // slower for accessibility
+      pitch: 1.0,
+      volume: 1,
+      ...options,
+    });
+  },
+
+  // ── ARIA LIVE REGION ANNOUNCE ───────────────
+  // Works alongside TalkBack's own announcements
+  announceToScreenReader(text) {
+    const announcer = document.getElementById(
+      'sr-announcer'
+    );
+    if (announcer) {
+      announcer.textContent = '';
+      // Small delay ensures screen reader picks it up
+      setTimeout(() => {
+        announcer.textContent = text;
+      }, 100);
+    }
+  },
 };
 
 export default SpeechEngine;

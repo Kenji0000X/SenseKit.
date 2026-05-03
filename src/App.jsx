@@ -556,7 +556,7 @@ export default function App() {
             }}
           >
             <div style={{ color: '#4a5568', fontSize: '0.78rem' }}>
-              © 2025 SenseKit
+© 2026 SenseKit
             </div>
             <div style={{ color: '#a0b4cc', fontSize: '0.78rem', flex: 1 }}>
               Designed for Deaf, HoH, Blind & Low Vision users
